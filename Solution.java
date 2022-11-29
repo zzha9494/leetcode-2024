@@ -52,7 +52,21 @@ public class Solution {
             cursor = cursor.next;
             carryFlag = (x + y + carryFlag) / 10;
         }
-
         return dummy.next;
+    }
+
+    public int lengthOfLongestSubstring(String s) {
+        // Q3
+        HashMap<Character, Integer> map = new HashMap<>();
+        int result = 0, left = 0;
+
+        for (int right = 0; right < s.length(); right++) {
+            Character c = s.charAt(right);
+            if (map.containsKey(c))
+                left = Math.max(left, map.get(c) + 1);
+            map.put(c, right);
+            result = Math.max(result, right - left + 1);
+        }
+        return result;
     }
 }

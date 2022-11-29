@@ -40,5 +40,19 @@ class Solution:
                 l1 = l1.next
             if l2:
                 l2 = l2.next
-
         return dummy.next
+
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        """Q3"""
+        n = len(s)
+        right = 0
+        window = set()
+        result = 0
+
+        for left in range(n):
+            while right < n and s[right] not in window:
+                window.add(s[right])
+                result = max(result, len(window))
+                right += 1
+            window.remove(s[left])
+        return result
