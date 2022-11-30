@@ -104,3 +104,13 @@ class Solution:
             else:
                 rows[2 * numRows - 2 - x] += s[i]
         return "".join(rows)
+
+    def reverse(self, x: int) -> int:
+        """Q7"""
+        negative = False
+
+        if x < 0:
+            x = -x
+            negative = True
+        x = -int(str(x)[::-1]) if negative else int(str(x)[::-1])
+        return x if x in range(-2 ** 31, 2 ** 31 - 1) else 0
