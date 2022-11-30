@@ -69,4 +69,29 @@ public class Solution {
         }
         return result;
     }
+
+    public String longestPalindrome(String s) {
+        // Q5
+        int[] res = { 0, 0 };
+
+        for (int i = 0; i < s.length(); i++) {
+            int[] res1 = longestPalindrome_helper(s, i, i);
+            int[] res2 = longestPalindrome_helper(s, i, i + 1);
+            if ((res1[1] - res1[0]) > res[1] - res[0])
+                res = res1;
+            if ((res2[1] - res2[0]) > res[1] - res[0])
+                res = res2;
+        }
+        return s.substring(res[0], res[1] + 1);
+    }
+
+    int[] longestPalindrome_helper(String s, int left, int right) {
+        // Expand around center
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        return new int[] { left + 1, right - 1 };
+    }
+
 }
