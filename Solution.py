@@ -9,7 +9,7 @@ class ListNode:
 
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        """Q1 alternative"""
+        """Q1"""
         hashmap = {}
         for index, item in enumerate(nums):
             if target - item in hashmap.keys():
@@ -17,7 +17,7 @@ class Solution:
             hashmap[item] = index
 
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        """Q1"""
+        """Q1 alternative"""
         for i in range(len(nums)):
             if target - nums[i] in nums[i + 1:]:
                 return [i, nums.index(target - nums[i], i + 1)]
@@ -107,10 +107,54 @@ class Solution:
 
     def reverse(self, x: int) -> int:
         """Q7"""
-        negative = False
-
-        if x < 0:
-            x = -x
-            negative = True
-        x = -int(str(x)[::-1]) if negative else int(str(x)[::-1])
+        sign = -1 if x < 0 else 1
+        x = sign * int(str(sign * x)[::-1])
         return x if x in range(-2 ** 31, 2 ** 31 - 1) else 0
+
+    def myAtoi(self, s: str) -> int:
+        """Q8"""
+        sign, index, ans, n = 1, 0, 0, len(s)
+        MIN_VAL, MAX_VAL = -2 ** 31, 2**31 - 1
+
+        # s = s.lstrip()
+        while index < n and s[index] == " ":
+            index += 1
+
+        if index < n and s[index] in "+-":
+            sign = 1 if s[index] == "+" else -1
+            index += 1
+
+        while index < n and s[index].isdecimal():
+            if ans > (MAX_VAL - int(s[index])) / 10:
+                return MAX_VAL if sign == 1 else MIN_VAL
+            ans = ans * 10 + int(s[index])
+            index += 1
+        return sign * ans
+
+    def myAtoi(self, s: str) -> int:
+        """Q8 alternative"""
+        s = s.lstrip()
+        if not s:
+            return 0
+
+        ans, sign = "", 1
+        MIN_VAL, MAX_VAL = -2 ** 31, 2**31 - 1
+        if s[0] in "+-":
+            sign = 1 if s[0] == "+" else -1
+            s = s[1:]
+
+        for i in s:
+            if i.isdecimal():
+                ans += i
+            else:
+                break
+
+        try:
+            ans = sign * int(ans)
+        except:
+            return 0
+
+        if ans in range(MIN_VAL, MAX_VAL):
+            return ans
+        else:
+            return MIN_VAL if sign == -1 else MAX_VAL
