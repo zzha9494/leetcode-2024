@@ -18,6 +18,7 @@ class ListNode {
 }
 
 public class Solution {
+
     // Q1
     public int[] twoSum(int[] nums, int target) {
         HashMap<Integer, Integer> map = new HashMap<>();
@@ -29,8 +30,8 @@ public class Solution {
         return null;
     }
 
+    // Q2
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        // Q2
         ListNode dummy = new ListNode();
         ListNode cursor = dummy;
         int carryFlag = 0, x, y;
@@ -55,8 +56,8 @@ public class Solution {
         return dummy.next;
     }
 
+    // Q3
     public int lengthOfLongestSubstring(String s) {
-        // Q3
         HashMap<Character, Integer> map = new HashMap<>();
         int result = 0, left = 0;
 
@@ -70,8 +71,8 @@ public class Solution {
         return result;
     }
 
+    // Q5
     public String longestPalindrome(String s) {
-        // Q5
         int[] res = { 0, 0 };
 
         for (int i = 0; i < s.length(); i++) {
@@ -92,6 +93,34 @@ public class Solution {
             right++;
         }
         return new int[] { left + 1, right - 1 };
+    }
+
+    // Q6
+    public String convert(String s, int numRows) {
+        if (numRows == 1)
+            return s;
+
+        StringBuilder[] rows = new StringBuilder[numRows];
+        for (int i = 0; i < rows.length; i++)
+            rows[i] = new StringBuilder();
+
+        for (int i = 0; i < s.length(); i++) {
+            int x = i % (2 * numRows - 2);
+            if (x < numRows)
+                rows[x].append(s.charAt(i));
+            else
+                rows[2 * numRows - 2 - x].append(s.charAt(i));
+        }
+
+        StringBuilder res = new StringBuilder();
+        for (StringBuilder sb : rows)
+            res.append(sb);
+        return res.toString();
+    }
+
+    public static void main(String[] args) {
+        // Solution test = new Solution();
+
     }
 
 }

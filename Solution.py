@@ -88,3 +88,19 @@ class Solution:
                     start = left
 
         return s[start: start + max_length]
+
+    def convert(self, s: str, numRows: int) -> str:
+        """Q6"""
+        if numRows == 1:
+            return s
+
+        rows = ["" for _ in range(numRows)]
+
+        for i in range(len(s)):
+            # T = 2 * numRows - 2
+            x = i % (2 * numRows - 2)
+            if x < numRows:
+                rows[x] += s[i]
+            else:
+                rows[2 * numRows - 2 - x] += s[i]
+        return "".join(rows)
