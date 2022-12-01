@@ -165,6 +165,17 @@ public class Solution {
         return x == inversion || x == inversion / 10;
     }
 
+    // Q11
+    public int maxArea(int[] height) {
+        int left = 0, right = height.length - 1, ans = 0;
+
+        while (left < right) {
+            ans = height[left] < height[right] ? Math.max(ans, (right - left) * height[left++])
+                    : Math.max(ans, (right - left) * height[right--]);
+        }
+        return ans;
+    }
+
     public static void main(String[] args) {
         // Solution test = new Solution();
 

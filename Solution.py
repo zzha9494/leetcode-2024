@@ -162,3 +162,18 @@ class Solution:
     def isPalindrome(self, x: int) -> bool:
         """Q9"""
         return False if x < 0 else str(x) == str(x)[::-1]
+
+    def maxArea(self, height: List[int]) -> int:
+        """Q11"""
+        left, right, ans = 0, len(height) - 1, 0
+        max_height = max(height)
+
+        while left < right:
+            ans = max(ans, (right - left) * min(height[left], height[right]))
+            if height[left] < height[right]:
+                left += 1
+            else:
+                right -= 1
+            if ans >= max_height * (right - left):
+                break
+        return ans
