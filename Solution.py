@@ -203,3 +203,19 @@ class Solution:
                 if num == 0:
                     break
         return ans
+
+    def romanToInt(self, s: str) -> int:
+        """Q13"""
+        symbols = ["M", "CM", "D", "CD", "C", "XC",
+                   "L", "XL", "X", "IX", "V", "IV", "I"]
+        nums = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
+        ans, i = 0, 0
+
+        while i < len(s):
+            if i < len(s) - 1 and s[i:i+2] in symbols:
+                ans += nums[symbols.index(s[i:i+2])]
+                i += 2
+            else:
+                ans += nums[symbols.index(s[i])]
+                i += 1
+        return ans
