@@ -219,3 +219,29 @@ class Solution:
                 ans += nums[symbols.index(s[i])]
                 i += 1
         return ans
+
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        """Q14"""
+        for i in range(len(strs[0])):
+            # for str in strs[1:]:
+            #     if i == len(str) or str[i] != strs[0][i]:
+            #         return str[:i]
+            if any(i == len(str) or str[i] != strs[0][i] for str in strs[1:]):
+                return strs[0][:i]
+        return strs[0]
+
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        """Q14 alternative"""
+        box = set()
+        index = 0
+        try:
+            while True:
+                for str in strs:
+                    box.add(str[index])
+                if len(box) != 1:
+                    break
+                box.clear()
+                index += 1
+        except IndexError:
+            pass
+        return strs[0][:index]
