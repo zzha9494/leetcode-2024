@@ -158,3 +158,7 @@ class Solution:
             return ans
         else:
             return MIN_VAL if sign == -1 else MAX_VAL
+
+    def isPalindrome(self, x: int) -> bool:
+        """Q9"""
+        return False if x < 0 else str(x) == str(x)[::-1]
