@@ -267,8 +267,56 @@ public class Solution {
         return ans;
     }
 
+    // Q16
+    public int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
+        int ans = nums[0] + nums[1] + nums[2];
+
+        for (int i = 0; i < nums.length - 2; i++) {
+            // skip same first num
+            if (i > 0 && nums[i] == nums[i - 1])
+                continue;
+
+            int j = i + 1, k = nums.length - 1;
+            int min = nums[i] + nums[j] + nums[j + 1];
+            int max = nums[i] + nums[k - 1] + nums[k];
+
+            // skip the rest loop as min increases
+            if (target <= min) {
+                if (Math.abs(target - min) < Math.abs(target - ans))
+                    ans = min;
+                break;
+            }
+            
+            if (max <= target) {
+                if (Math.abs(target - max) < Math.abs(target - ans))
+                    ans = max;
+                if (ans == target)
+                    return ans;
+                continue;
+            }
+
+            while (j < k) {
+                int sum = nums[i] + nums[j] + nums[k];
+                if (sum == target)
+                    return sum;
+                if (Math.abs(target - sum) < Math.abs(target - ans))
+                    ans = sum;
+                if (sum > target) {
+                    k--;
+                    while (j < k && nums[k] == nums[k + 1])
+                        k--;
+                } else {
+                    j++;
+                    while (j < k && nums[j] == nums[j - 1])
+                        j++;
+                }
+            }
+        }
+        return ans;
+    }
+
     public static void main(String[] args) {
         // Solution test = new Solution();
-
     }
 }
