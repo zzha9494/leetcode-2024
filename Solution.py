@@ -1,3 +1,4 @@
+import itertools
 from typing import List, Optional
 
 
@@ -316,3 +317,44 @@ class Solution:
                     while j < k and nums[j] == nums[j - 1]:
                         j += 1
         return ans
+
+    def letterCombinations(self, digits: str) -> List[str]:
+        """Q17"""
+        if digits == "":
+            return []
+
+        dic = {'2': 'abc',
+               '3': 'def',
+               '4': 'ghi',
+               '5': 'jkl',
+               '6': 'mno',
+               '7': 'pqrs',
+               '8': 'tuv',
+               '9': 'wxyz'}
+
+        def helper(current_digits, current_combination):
+            if len(current_digits) == 0:
+                ans.append(current_combination)
+            else:
+                for letter in dic[current_digits[0]]:
+                    helper(current_digits[1:], current_combination + letter)
+
+        ans = []
+        helper(digits, "")
+        return ans
+
+    def letterCombinations(self, digits: str) -> List[str]:
+        """Q17 alternative"""
+        if digits == "":
+            return []
+
+        dic = {'2': 'abc',
+               '3': 'def',
+               '4': 'ghi',
+               '5': 'jkl',
+               '6': 'mno',
+               '7': 'pqrs',
+               '8': 'tuv',
+               '9': 'wxyz'}
+        groups = [dic[digit] for digit in digits]
+        return ["".join(combination) for combination in itertools.product(*groups)]

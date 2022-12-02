@@ -287,7 +287,7 @@ public class Solution {
                     ans = min;
                 break;
             }
-            
+
             if (max <= target) {
                 if (Math.abs(target - max) < Math.abs(target - ans))
                     ans = max;
@@ -314,6 +314,43 @@ public class Solution {
             }
         }
         return ans;
+    }
+
+    // Q17
+    public List<String> letterCombinations(String digits) {
+        List<String> ans = new ArrayList<>();
+        if (digits.length() == 0)
+            return ans;
+        Map<Character, String> map = new HashMap<Character, String>() {
+            {
+                put('2', "abc");
+                put('3', "def");
+                put('4', "ghi");
+                put('5', "jkl");
+                put('6', "mno");
+                put('7', "pqrs");
+                put('8', "tuv");
+                put('9', "wxyz");
+            }
+        };
+        StringBuilder combination = new StringBuilder();
+        letterCombinations_helper(digits, combination, ans, map);
+        return ans;
+    }
+
+    void letterCombinations_helper(String currentDigits, StringBuilder currentCombination, List<String> ans,
+            Map<Character, String> map) {
+        if (currentDigits.length() == 0)
+            ans.add(currentCombination.toString());
+        else {
+            String firstLetters = map.get(currentDigits.charAt(0));
+            for (int i = 0; i < firstLetters.length(); i++) {
+                char letter = firstLetters.charAt(i);
+                letterCombinations_helper(currentDigits.substring(1), currentCombination.append(letter), ans, map);
+                // need to delete the last char added, because of the modified StringBuilder.
+                currentCombination.deleteCharAt(currentCombination.length() - 1);
+            }
+        }
     }
 
     public static void main(String[] args) {
