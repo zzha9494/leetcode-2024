@@ -401,3 +401,18 @@ class Solution:
                     else:
                         l -= 1
         return ans
+
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        """Q19"""
+        dummy = ListNode(0, head)
+
+        fast, slow = dummy, dummy
+        for i in range(n):
+            fast = fast.next
+
+        while fast.next:
+            fast = fast.next
+            slow = slow.next
+
+        slow.next = slow.next.next
+        return dummy.next
