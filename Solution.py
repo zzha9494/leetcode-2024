@@ -358,3 +358,46 @@ class Solution:
                '9': 'wxyz'}
         groups = [dic[digit] for digit in digits]
         return ["".join(combination) for combination in itertools.product(*groups)]
+
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        """Q18"""
+        ans = list()
+        n = len(nums)
+        if not nums or n < 4:
+            return ans
+
+        nums.sort()
+        for i in range(n-3):
+            if i > 0 and nums[i] == nums[i-1]:
+                continue
+            if nums[i] + nums[i+1] + nums[i+2] + nums[i+3] > target:
+                # current min
+                break
+            if nums[i] + nums[n-3] + nums[n-2] + nums[n-1] < target:
+                # current max
+                continue
+
+            for j in range(i+1, n-2):
+                if j > i+1 and nums[j] == nums[j-1]:
+                    continue
+                if nums[i] + nums[j] + nums[j+1] + nums[j+2] > target:
+                    break
+                if nums[i] + nums[j] + nums[n-2] + nums[n-1] < target:
+                    continue
+
+                k, l = j + 1, n - 1
+                while k < l:
+                    temp = nums[i] + nums[j] + nums[k] + nums[l]
+                    if temp == target:
+                        ans.append([nums[i], nums[j], nums[k], nums[l]])
+                        k += 1
+                        l -= 1
+                        while k < l and nums[k] == nums[k-1]:
+                            k += 1
+                        while k < l and nums[l] == nums[l+1]:
+                            l -= 1
+                    elif temp < target:
+                        k += 1
+                    else:
+                        l -= 1
+        return ans
