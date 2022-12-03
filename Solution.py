@@ -1,3 +1,4 @@
+from functools import lru_cache
 import itertools
 from typing import List, Optional
 
@@ -456,3 +457,17 @@ class Solution:
         else:
             cursor.next = list2
         return dummy.next
+
+    @lru_cache(None)
+    def generateParenthesis(self, n: int) -> List[str]:
+        """Q22"""
+        if n == 0:
+            return [""]
+
+        ans = []
+        for i in range(n):
+            for left in self.generateParenthesis(i):
+                for right in self.generateParenthesis(n-i-1):
+                    # i + n - i - 1 + 1 = n
+                    ans.append(f"({left}){right}")
+        return ans

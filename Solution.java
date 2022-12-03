@@ -455,6 +455,30 @@ public class Solution {
         }
     }
 
+    // Q22
+    public List<String> generateParenthesis(int n) {
+        List<String> ans = new ArrayList<>();
+        this.generateParenthesis_helper(ans, n, 0, 0, new StringBuilder());
+        return ans;
+    }
+
+    void generateParenthesis_helper(List<String> ans, int n, int left, int right, StringBuilder current) {
+        if (left == n && right == n) {
+            ans.add(current.toString());
+            return;
+        }
+        if (left < n) {
+            current.append("(");
+            this.generateParenthesis_helper(ans, n, left + 1, right, current);
+            current.deleteCharAt(current.length() - 1);
+        }
+        if (right < left) {
+            current.append(")");
+            this.generateParenthesis_helper(ans, n, left, right + 1, current);
+            current.deleteCharAt(current.length() - 1);
+        }
+    }
+
     public static void main(String[] args) {
         // Solution test = new Solution();
     }
