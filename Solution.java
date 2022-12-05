@@ -536,6 +536,19 @@ public class Solution {
         return cursor;
     }
 
+    // Q26
+    public int removeDuplicates(int[] nums) {
+        if (nums.length < 2)
+            return nums.length;
+
+        int slow = 1;
+        for (int fast = slow; fast < nums.length; fast++) {
+            if (nums[fast] != nums[fast - 1])
+                nums[slow++] = nums[fast];
+        }
+        return slow;
+    }
+
     public static void main(String[] args) {
         // Solution test = new Solution();
     }
