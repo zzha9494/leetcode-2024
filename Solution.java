@@ -1,10 +1,12 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 class ListNode {
     int val;
@@ -477,6 +479,31 @@ public class Solution {
             this.generateParenthesis_helper(ans, n, left, right + 1, current);
             current.deleteCharAt(current.length() - 1);
         }
+    }
+
+    // Q23
+    public ListNode mergeKLists(ListNode[] lists) {
+        PriorityQueue<ListNode> pq = new PriorityQueue<>(new Comparator<ListNode>() {
+            @Override
+            public int compare(ListNode o1, ListNode o2) {
+                return o1.val - o2.val; // >0, true, exchange
+            }
+        });
+
+        ListNode dummy = new ListNode(), cursor = dummy;
+        for (ListNode list : lists) {
+            if (list != null)
+                pq.add(list);
+        }
+
+        while (!pq.isEmpty()) {
+            ListNode cursorrentSmall = pq.poll();
+            cursor.next = cursorrentSmall;
+            cursor = cursor.next;
+            if (cursorrentSmall.next != null)
+                pq.add(cursorrentSmall.next);
+        }
+        return dummy.next;
     }
 
     public static void main(String[] args) {

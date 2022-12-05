@@ -471,3 +471,43 @@ class Solution:
                     # i + n - i - 1 + 1 = n
                     ans.append(f"({left}){right}")
         return ans
+
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        """Q23"""
+        n = len(lists)
+        # base case
+        if n == 0:
+            return None
+        elif n < 2:
+            return lists[0]
+
+        # divide
+        mid = n // 2
+        left = lists[:mid]
+        right = lists[mid:]
+
+        # recur
+        merged_left = self.mergeKLists(left)
+        merged_right = self.mergeKLists(right)
+
+        # conquer
+        return self.mergeKLists_helper(merged_left, merged_right)
+
+    def mergeKLists_helper(self, left: ListNode, right: ListNode):
+        dummy = ListNode()
+        cursor = dummy
+
+        while left and right:
+            if left.val < right.val:
+                cursor.next = left
+                left = left.next
+                cursor = cursor.next
+            else:
+                cursor.next = right
+                right = right.next
+                cursor = cursor.next
+        if left:
+            cursor.next = left
+        else:
+            cursor.next = right
+        return dummy.next
