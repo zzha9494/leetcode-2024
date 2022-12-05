@@ -510,11 +510,30 @@ public class Solution {
     public ListNode swapPairs(ListNode head) {
         if (head == null || head.next == null)
             return head;
-        
+
         ListNode newHead = head.next;
         head.next = this.swapPairs(newHead.next);
         newHead.next = head;
         return newHead;
+    }
+
+    // Q25
+    public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode cursor = head;
+        for (int i = 0; i < k; i++) {
+            if (cursor == null)
+                return head;
+            cursor = cursor.next;
+        }
+
+        cursor = this.reverseKGroup(cursor, k);
+        for (int i = 0; i < k; i++) {
+            ListNode temp = head.next;
+            head.next = cursor;
+            cursor = head;
+            head = temp;
+        }
+        return cursor;
     }
 
     public static void main(String[] args) {

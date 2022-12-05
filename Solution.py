@@ -527,3 +527,19 @@ class Solution:
             node2.next = node1
             cursor = node1
         return dummy.next
+
+    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        """Q25"""
+        cursor = head
+        for _ in range(k):
+            if not cursor:
+                return head
+            cursor = cursor.next
+
+        cursor = self.reverseKGroup(cursor, k)
+        for _ in range(k):
+            temp = head.next
+            head.next = cursor
+            cursor = head
+            head = temp
+        return cursor
