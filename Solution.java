@@ -506,6 +506,17 @@ public class Solution {
         return dummy.next;
     }
 
+    // Q24
+    public ListNode swapPairs(ListNode head) {
+        if (head == null || head.next == null)
+            return head;
+        
+        ListNode newHead = head.next;
+        head.next = this.swapPairs(newHead.next);
+        newHead.next = head;
+        return newHead;
+    }
+
     public static void main(String[] args) {
         // Solution test = new Solution();
     }

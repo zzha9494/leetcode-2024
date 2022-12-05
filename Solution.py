@@ -511,3 +511,19 @@ class Solution:
         else:
             cursor.next = right
         return dummy.next
+
+    def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        """Q24"""
+        dummy = ListNode(next=head)
+        cursor = dummy
+
+        while cursor.next and cursor.next.next:
+            # cursor -> node1 -> node2
+            node1 = cursor.next
+            node2 = node1.next
+
+            cursor.next = node2
+            node1.next = node2.next
+            node2.next = node1
+            cursor = node1
+        return dummy.next
