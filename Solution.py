@@ -560,7 +560,7 @@ class Solution:
     def removeElement(self, nums: List[int], val: int) -> int:
         """Q27"""
         slow = 0
-        for fast in range(n):
+        for fast in range(len(nums)):
             if nums[fast] != val:
                 nums[slow] = nums[fast]
                 slow += 1
@@ -576,3 +576,21 @@ class Solution:
             else:
                 left += 1
         return left
+
+    def nextPermutation(self, nums: List[int]) -> None:
+        """Q31"""
+        i = len(nums) - 2
+        while i >= 0 and nums[i] >= nums[i+1]:
+            i -= 1
+
+        if i >= 0:
+            j = len(nums) - 1
+            while i < j and nums[i] >= nums[j]:
+                j -= 1
+            nums[i], nums[j] = nums[j], nums[i]
+
+        left, right = i + 1, len(nums) - 1
+        while left < right:
+            nums[left], nums[right] = nums[right], nums[left]
+            left += 1
+            right -= 1
