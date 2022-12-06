@@ -609,3 +609,28 @@ class Solution:
                 else:
                     ans = max(ans, i - stack[-1])
         return ans
+
+    def search(self, nums: List[int], target: int) -> int:
+        """Q33"""
+        # border
+        if nums[0] == target:
+            return 0
+        if nums[len(nums)-1] == target:
+            return len(nums) -1
+
+        l, r = 0, len(nums) - 1
+        while l + 1 < r:
+            m = (l + r)//2
+            if nums[m] == target:
+                return m
+            if nums[l] < nums[m]:  # [l,m] is ascending
+                if nums[l] <= target and target <= nums[m]:
+                    r = m
+                else:
+                    l = m
+            else:
+                if nums[m] <= target and target <= nums[r]:
+                    l = m
+                else:
+                    r = m
+        return -1

@@ -612,6 +612,28 @@ public class Solution {
         return ans;
     }
 
+    // Q33
+    public int search(int[] nums, int target) {
+        int l = -1, r = nums.length;
+        while (l + 1 < r) {
+            int m = (l + r) / 2;
+            if (nums[m] == target)
+                return m;
+            if (nums[l + 1] <= nums[m]) {
+                if (nums[l + 1] <= target && target <= nums[m])
+                    r = m;
+                else
+                    l = m;
+            } else {
+                if (nums[m] <= target && target <= nums[r - 1])
+                    l = m;
+                else
+                    r = m;
+            }
+        }
+        return -1;
+    }
+
     public static void main(String[] args) {
         // Solution test = new Solution();
 
