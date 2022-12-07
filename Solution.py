@@ -674,3 +674,21 @@ class Solution:
             else:
                 r = m
         return r
+
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        """Q36"""
+        row = [
+            [False] * 9 for i in range(9)]  # whether current number appeared in the i-th row
+        column = [[False] * 9 for i in range(9)]
+        box = [[False] * 9 for i in range(9)]
+
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] == ".":
+                    continue
+                num = ord(board[i][j]) - ord("1")
+                if row[i][num] or column[j][num] or box[i//3 * 3 + j//3][num]:
+                    return False
+                row[i][num], column[j][num] = True, True
+                box[i//3 * 3 + j//3][num] = True,
+        return True
