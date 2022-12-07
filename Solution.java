@@ -665,6 +665,19 @@ public class Solution {
         return ans;
     }
 
+    // Q35
+    public int searchInsert(int[] nums, int target) {
+        int l = -1, r = nums.length;
+        while (l + 1 < r) {
+            int m = (l + r) / 2;
+            if (nums[m] < target)
+                l = m;
+            else
+                r = m;
+        }
+        return r;
+    }
+
     public static void main(String[] args) {
         // Solution test = new Solution();
 
