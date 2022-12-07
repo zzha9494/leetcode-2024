@@ -616,7 +616,7 @@ class Solution:
         if nums[0] == target:
             return 0
         if nums[len(nums)-1] == target:
-            return len(nums) -1
+            return len(nums) - 1
 
         l, r = 0, len(nums) - 1
         while l + 1 < r:
@@ -634,3 +634,32 @@ class Solution:
                 else:
                     r = m
         return -1
+
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        """Q34"""
+        l, r = -1, len(nums)
+        if r == 0:
+            return [-1, -1]
+
+        ans = []
+        while l+1 < r:
+            m = (l + r)//2
+            if nums[m] >= target:
+                r = m
+            else:
+                l = m
+        if r == len(nums) or nums[r] != target:
+            return [-1, -1]
+        else:
+            ans.append(r)
+
+        l, r = -1, len(nums)
+        while l+1 < r:
+            m = (l + r) // 2
+            if nums[m] > target:
+                r = m
+            else:
+                l = m
+
+        ans.append(l)
+        return ans

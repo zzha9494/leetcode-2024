@@ -634,6 +634,37 @@ public class Solution {
         return -1;
     }
 
+    // Q34
+    public int[] searchRange(int[] nums, int target) {
+        int l = -1, r = nums.length;
+        if (r == 0)
+            return new int[] { -1, -1 };
+
+        while (l + 1 < r) {
+            int m = (l + r) / 2;
+            if (nums[m] < target)
+                l = m;
+            else
+                r = m;
+        }
+
+        if (r == nums.length || nums[r] != target)
+            return new int[] { -1, -1 };
+        int[] ans = new int[] { r, -1 };
+
+        l = -1;
+        r = nums.length;
+        while (l + 1 < r) {
+            int m = (l + r) / 2;
+            if (nums[m] <= target)
+                l = m;
+            else
+                r = m;
+        }
+        ans[1] = l;
+        return ans;
+    }
+
     public static void main(String[] args) {
         // Solution test = new Solution();
 
