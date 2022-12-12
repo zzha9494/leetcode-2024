@@ -692,3 +692,17 @@ class Solution:
                 row[i][num], column[j][num] = True, True
                 box[i//3 * 3 + j//3][num] = True,
         return True
+
+    def countAndSay(self, n: int) -> str:
+        """Q38"""
+        if n == 1:
+            return "1"
+
+        s = self.countAndSay(n-1)
+        count, ans = 0, ""
+        for i in range(len(s)):
+            count += 1
+            if i == len(s) - 1 or s[i] != s[i+1]:
+                ans += str(count) + s[i]
+                count = 0
+        return ans
