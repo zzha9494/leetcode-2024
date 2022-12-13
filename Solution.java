@@ -714,6 +714,32 @@ public class Solution {
         return ans.toString();
     }
 
+    // Q39
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<List<Integer>> ans = new ArrayList<>();
+        this.combinationSum_helper(candidates, target, new LinkedList<>(), ans);
+        return ans;
+    }
+
+    void combinationSum_helper(int[] candidates, int target, Deque<Integer> path, List<List<Integer>> ans) {
+        for (int i = 0; i < candidates.length; i++) {
+            if (!path.isEmpty() && candidates[i] < path.peek())
+                continue;
+            if (candidates[i] < target) {
+                path.push(candidates[i]);
+                this.combinationSum_helper(candidates, target - candidates[i], path, ans);
+                path.pop();
+            } else if (candidates[i] == target) {
+                path.push(candidates[i]);
+                ans.add(new ArrayList<>(path));
+                path.pop();
+                return;
+            } else
+                return;
+        }
+    }
+
     public static void main(String[] args) {
         // Solution test = new Solution();
 

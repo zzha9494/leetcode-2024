@@ -706,3 +706,26 @@ class Solution:
                 ans += str(count) + s[i]
                 count = 0
         return ans
+
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        """Q39"""
+        def combinationSum_helper(candidates: List[int], target: int, path: List[int], ans: List[List[int]]):
+            for i in candidates:
+                if path and i < path[-1]:
+                    continue
+                if i < target:
+                    path.append(i)
+                    combinationSum_helper(candidates, target - i, path, ans)
+                    path.pop()
+                elif i == target:
+                    path.append(i)
+                    ans.append(path.copy())
+                    path.pop()
+                    return
+                else:
+                    return
+
+        candidates.sort()
+        ans = []
+        combinationSum_helper(candidates, target, [], ans)
+        return ans
