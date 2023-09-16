@@ -729,3 +729,28 @@ class Solution:
         ans = []
         combinationSum_helper(candidates, target, [], ans)
         return ans
+
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        """Q40"""
+        def combinationSum2_helper(candidates: List[int], target: int, path: List[int], ans: List[List[int]]):
+            for i in range(len(candidates)):
+                # skip the duplicated number, such as [1, 1, 2, 3] target = 3
+                if i > 0 and candidates[i] == candidates[i-1]:
+                    continue
+                if candidates[i] < target:
+                    path.append(candidates[i])
+                    combinationSum2_helper(
+                        candidates[i+1:], target - candidates[i], path, ans)
+                    path.pop()
+                elif candidates[i] == target:
+                    path.append(candidates[i])
+                    ans.append(path.copy())
+                    path.pop()
+                    return
+                else:
+                    return
+
+        candidates.sort()
+        ans = []
+        combinationSum2_helper(candidates, target, [], ans)
+        return ans

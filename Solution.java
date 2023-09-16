@@ -740,8 +740,36 @@ public class Solution {
         }
     }
 
+    // Q40
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<List<Integer>> ans = new ArrayList<>();
+        this.combinationSum2_helper(candidates, target, new LinkedList<>(), ans);
+        return ans;
+    }
+
+    void combinationSum2_helper(int[] candidates, int target, Deque<Integer> path, List<List<Integer>> ans) {
+        for (int i = 0; i < candidates.length; i++) {
+            if (i > 0 && candidates[i] == candidates[i - 1])
+                continue;
+            if (candidates[i] < target) {
+                path.addFirst(candidates[i]);
+                this.combinationSum2_helper(Arrays.copyOfRange(candidates, i + 1, candidates.length),
+                        target - candidates[i], path,
+                        ans);
+                path.removeFirst();
+            } else if (candidates[i] == target) {
+                path.addFirst(candidates[i]);
+                ans.add(new ArrayList<>(path));
+                path.removeFirst();
+                return;
+            } else
+                return;
+        }
+    }
+
     public static void main(String[] args) {
-        // Solution test = new Solution();
+        // Solution s = new Solution();
 
     }
 }
