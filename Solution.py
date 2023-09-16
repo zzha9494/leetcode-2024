@@ -754,3 +754,23 @@ class Solution:
         ans = []
         combinationSum2_helper(candidates, target, [], ans)
         return ans
+
+    def firstMissingPositive(self, nums: List[int]) -> int:
+        """Q41"""
+        n = len(nums)
+        for i in range(n):
+            # first loop remove non-positive
+            if nums[i] < 1:
+                nums[i] = n + 1
+
+        for i in range(n):
+            # if number correct, label position i-1 to minus sign
+            x = abs(nums[i])
+            if x <= n:
+                nums[x - 1] = -abs(nums[x - 1])
+
+        for i in range(n):
+            # find the number without a label (minus sign)
+            if nums[i] > 0:
+                return i + 1
+        return n + 1
