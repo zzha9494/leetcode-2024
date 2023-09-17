@@ -790,6 +790,39 @@ public class Solution {
         return n + 1;
     }
 
+    // Q42
+    public int trap(int[] height) {
+        int ans = 0;
+        int left = 0, right = height.length - 1;
+        int leftMax = 0, rightMax = 0;
+        while (left < right) {
+            leftMax = Math.max(leftMax, height[left]);
+            rightMax = Math.max(rightMax, height[right]);
+            if (leftMax < rightMax) {
+                ans += leftMax - height[left++];
+            } else {
+                ans += rightMax - height[right--];
+            }
+        }
+        return ans;
+    }
+
+    // Q45
+    public int jump(int[] nums) {
+        int step = 0, maxPosition = 0, border = 0;
+        for (int i = 0; i < nums.length - 1; i++) {
+            maxPosition = Math.max(maxPosition, i + nums[i]);
+            if (i == border) {
+                step++;
+                border = maxPosition;
+                if (border >= nums.length - 1) {
+                    break;
+                }
+            }
+        }
+        return step;
+    }
+
     public static void main(String[] args) {
         // Solution s = new Solution();
 

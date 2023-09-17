@@ -758,19 +758,71 @@ class Solution:
     def firstMissingPositive(self, nums: List[int]) -> int:
         """Q41"""
         n = len(nums)
+        # first loop remove non-positive
         for i in range(n):
-            # first loop remove non-positive
             if nums[i] < 1:
                 nums[i] = n + 1
 
+        # if number correct, label position i-1 to minus sign
         for i in range(n):
-            # if number correct, label position i-1 to minus sign
             x = abs(nums[i])
             if x <= n:
                 nums[x - 1] = -abs(nums[x - 1])
 
+        # find the number without a label (minus sign)
         for i in range(n):
-            # find the number without a label (minus sign)
             if nums[i] > 0:
                 return i + 1
         return n + 1
+
+    def trap(self, height: List[int]) -> int:
+        """Q42"""
+        n = len(height)
+        highest = max(height)
+        # invalid input
+        if n <= 2 or highest == 0:
+            return 0
+
+        ans = 0
+        left, current = 0, 0
+        # from left to first highest
+        while height[left] != highest:
+            if height[left] <= current:
+                # if left is lower than current border, can get some water
+                ans += (current - height[left])
+            else:
+                # update the higher border
+                current = height[left]
+            left += 1
+
+        right, current = n - 1, 0
+        # from right to last highest
+        while height[right] != highest:
+            if height[right] <= current:
+                ans += (current - height[right])
+            else:
+                current = height[right]
+            right -= 1
+
+        # if it has more than one highest
+        while left != right:
+            ans += (highest - height[left])
+            left += 1
+
+        return ans
+
+    def jump(self, nums: List[int]) -> int:
+        """Q45"""
+        maxPosition = 0  # the farthest position where next jump can reach
+        border = 0  # the farthest position where the current jump can reach
+        step = 0
+        for i in range(len(nums) - 1):
+            # within the current jump, find the farthest position for next jump
+            maxPosition = max(maxPosition, i + nums[i])
+            # search until border, have to jump, no need to jump farthest
+            if i == border:
+                step += 1
+                border = maxPosition
+                if maxPosition >= len(nums) - 1:
+                    break
+        return step
