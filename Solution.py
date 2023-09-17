@@ -826,3 +826,18 @@ class Solution:
                 if maxPosition >= len(nums) - 1:
                     break
         return step
+
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        """Q46"""
+        n = len(nums)
+        if n == 1:
+            return [nums]
+        else:
+            current = self.permute(nums[1:])
+            ans = []
+            for e in current:
+                for i in range(len(e) + 1):
+                    temp = e.copy()
+                    temp.insert(i, nums[0])
+                    ans.append(temp)
+            return ans

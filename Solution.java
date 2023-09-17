@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashMap;
@@ -821,6 +822,31 @@ public class Solution {
             }
         }
         return step;
+    }
+
+    // Q46
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<List<Integer>>();
+
+        List<Integer> output = new ArrayList<Integer>();
+        for (int num : nums) {
+            output.add(num);
+        }
+
+        int n = nums.length;
+        permute_helper(0, n, output, ans);
+        return ans;
+    }
+
+    void permute_helper(int first, int n, List<Integer> output, List<List<Integer>> ans) {
+        if (first == n) {
+            ans.add(new ArrayList<>(output));
+        }
+        for (int i = first; i < n; i++) {
+            Collections.swap(output, first, i);
+            permute_helper(first + 1, n, output, ans);
+            Collections.swap(output, first, i);
+        }
     }
 
     public static void main(String[] args) {
