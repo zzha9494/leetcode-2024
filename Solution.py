@@ -334,15 +334,16 @@ class Solution:
                '8': 'tuv',
                '9': 'wxyz'}
 
-        def helper(current_digits, current_combination):
+        def letterCombinations_helper(current_digits, current_combination):
             if len(current_digits) == 0:
                 ans.append(current_combination)
             else:
                 for letter in dic[current_digits[0]]:
-                    helper(current_digits[1:], current_combination + letter)
+                    letterCombinations_helper(
+                        current_digits[1:], current_combination + letter)
 
         ans = []
-        helper(digits, "")
+        letterCombinations_helper(digits, "")
         return ans
 
     def letterCombinations(self, digits: str) -> List[str]:
@@ -475,6 +476,26 @@ class Solution:
 
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
         """Q23"""
+        def mergeKLists_helper(left: ListNode, right: ListNode):
+            # merge two lists
+            dummy = ListNode()
+            cursor = dummy
+
+            while left and right:
+                if left.val < right.val:
+                    cursor.next = left
+                    left = left.next
+                    cursor = cursor.next
+                else:
+                    cursor.next = right
+                    right = right.next
+                    cursor = cursor.next
+            if left:
+                cursor.next = left
+            else:
+                cursor.next = right
+            return dummy.next
+
         n = len(lists)
         # base case
         if n == 0:
@@ -492,26 +513,7 @@ class Solution:
         merged_right = self.mergeKLists(right)
 
         # conquer
-        return self.mergeKLists_helper(merged_left, merged_right)
-
-    def mergeKLists_helper(self, left: ListNode, right: ListNode):
-        dummy = ListNode()
-        cursor = dummy
-
-        while left and right:
-            if left.val < right.val:
-                cursor.next = left
-                left = left.next
-                cursor = cursor.next
-            else:
-                cursor.next = right
-                right = right.next
-                cursor = cursor.next
-        if left:
-            cursor.next = left
-        else:
-            cursor.next = right
-        return dummy.next
+        return mergeKLists_helper(merged_left, merged_right)
 
     def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
         """Q24"""
@@ -920,3 +922,41 @@ class Solution:
             half = myPow_helper(n // 2)
             return half * half if n % 2 == 0 else half * half * x
         return myPow_helper(n) if n >= 0 else 1.0 / myPow_helper(-n)
+
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        """Q51"""
+        def solveNQueens_helper(row):
+            # new solution found
+            if row == n:
+                ans.append(board.copy())
+                return
+
+            # iterate every column in current row
+            for column in range(n):
+                # not a valid position, pass
+                if columns[column] or diagonal_1[column-row] or diagonal_2[column + row]:
+                    continue
+                # choose the position for this row, set records and enter next row
+                board.append("." * column + "Q" + "." * (n - 1 - column))
+                columns[column], diagonal_1[column - row], diagonal_2[column + row] = \
+                    True, True, True
+                solveNQueens_helper(row + 1)
+                # backtrack
+                board.pop()
+                columns[column], diagonal_1[column - row], diagonal_2[column + row] = \
+                    False, False, False
+
+        ans = []
+        board = []
+        columns = [False] * n
+        diagonal_1 = [False] * (2 * n - 1)  # \: -i+j # 2(n-1) + 1
+        diagonal_2 = [False] * (2 * n - 1)  # /: i+j
+
+        # loop from first row
+        solveNQueens_helper(0)
+        return ans
+
+
+s = Solution()
+print(s.solveNQueens(4))
+a = "..."

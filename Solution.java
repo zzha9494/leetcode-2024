@@ -939,6 +939,44 @@ public class Solution {
         return ans;
     }
 
+    // Q51
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> ans = new ArrayList<>();
+        List<String> board = new ArrayList<>();
+        boolean[] columns = new boolean[n];
+        boolean[] diagonal_1 = new boolean[2 * n - 1];
+        boolean[] diagonal_2 = new boolean[2 * n - 1];
+        boolean[][] records = { columns, diagonal_1, diagonal_2 };
+        solveNQueens_helper(0, n, records, board, ans);
+        return ans;
+    }
+
+    void solveNQueens_helper(int row, int n, boolean[][] records, List<String> board, List<List<String>> ans) {
+        if (row == n) {
+            ans.add(new ArrayList<>(board));
+            return;
+        }
+
+        char[] current = new char[n]; // optimize, current row to be added
+        Arrays.fill(current, '.'); // optimize
+        for (int column = 0; column < n; column++) {
+            if (records[0][column] || records[1][n - 1 + column - row] || records[2][column + row]) {
+                continue;
+            }
+            current[column] = 'Q'; // optimize
+            board.add(String.copyValueOf(current)); // optimize
+            records[0][column] = true;
+            records[1][n - 1 + column - row] = true;
+            records[2][+column + row] = true;
+            this.solveNQueens_helper(row + 1, n, records, board, ans);
+            current[column] = '.';
+            board.remove(row);
+            records[0][column] = false;
+            records[1][n - 1 + column - row] = false;
+            records[2][column + row] = false;
+        }
+    }
+
     public static void main(String[] args) {
         // Solution s = new Solution();
 
