@@ -1,3 +1,4 @@
+import collections
 from functools import lru_cache
 import itertools
 from typing import List, Optional
@@ -899,3 +900,13 @@ class Solution:
             for column in range(row, n):
                 matrix[row][column], matrix[column][row] = \
                     matrix[column][row], matrix[row][column]
+
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        """Q49"""
+        mp = collections.defaultdict(list)
+
+        for s in strs:
+            key = "".join(sorted(s))
+            mp[key].append(s)
+
+        return list(mp.values())
