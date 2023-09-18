@@ -4,12 +4,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashMap;
-import java.util.HashSet;
+// import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
-import java.util.Set;
+// import java.util.Set;
 
 class ListNode {
     int val;
@@ -877,6 +877,26 @@ public class Solution {
             this.permuteUnique_helper(nums, used, track, ans);
             track.remove(track.size() - 1);
             used[i] = false;
+        }
+    }
+
+    // Q48
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        for (int i = 0; i < n / 2; i++) {
+            for (int j = 0; j < n; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[n - 1 - i][j];
+                matrix[n - 1 - i][j] = temp;
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
         }
     }
 

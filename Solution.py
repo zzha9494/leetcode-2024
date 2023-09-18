@@ -884,3 +884,18 @@ class Solution:
         nums.sort()
         permuteUnique_helper(0, len(nums), nums, ans)
         return ans
+
+    def rotate(self, matrix: List[List[int]]) -> None:
+        """Q48"""
+        n = len(matrix)
+        # first, horizontal flip
+        for row in range(n // 2):
+            for column in range(n):
+                matrix[row][column], matrix[n - 1-row][column] = \
+                    matrix[n - 1 - row][column], matrix[row][column]
+
+        # then, diagonal flip
+        for row in range(n):
+            for column in range(row, n):
+                matrix[row][column], matrix[column][row] = \
+                    matrix[column][row], matrix[row][column]
