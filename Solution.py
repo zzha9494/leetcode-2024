@@ -841,3 +841,46 @@ class Solution:
                     temp.insert(i, nums[0])
                     ans.append(temp)
             return ans
+
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        """Q47"""
+        def permuteUnique_helper(start: int, n: int, output: List[int], ans: set[tuple[int]]):
+            if start == n:
+                ans.add(tuple(output))
+                return
+            for i in range(start, n):
+                output[start], output[i] = output[i], output[start]
+                permuteUnique_helper(start+1, n, output, ans)
+                output[start], output[i] = output[i], output[start]
+
+        ans = set()
+        permuteUnique_helper(0, len(nums), nums, ans)
+        res = []
+        for e in ans:
+            res.append(list(e))
+        return res
+
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        """Q47 alternative"""
+        def permuteUnique_helper(current: int, n: int, output: List[int], ans: List[List[int]]):
+            if current == n:
+                ans.append(output.copy())
+                return
+            used = set()
+            for i in range(current, n):
+                # [1, 1, 2], current = 0, i = 0
+                # current means choose a number for current index
+                # first loop, 1 have not used, swap with current, iterate next with[1, 1, 2]
+                # current = 0, i = 1
+                # second loop, 1 have already used, if swap, still be [1, 1, 2], duplicated
+                if output[i] in used:
+                    continue
+                used.add(output[i])
+                output[current], output[i] = output[i], output[current]
+                permuteUnique_helper(current+1, n, output, ans)
+                output[current], output[i] = output[i], output[current]
+
+        ans = []
+        nums.sort()
+        permuteUnique_helper(0, len(nums), nums, ans)
+        return ans

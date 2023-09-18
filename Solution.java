@@ -4,10 +4,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Set;
 
 class ListNode {
     int val;
@@ -846,6 +848,35 @@ public class Solution {
             Collections.swap(output, first, i);
             permute_helper(first + 1, n, output, ans);
             Collections.swap(output, first, i);
+        }
+    }
+
+    // Q47
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        boolean[] used = new boolean[nums.length];
+        List<Integer> track = new ArrayList<>();
+        List<List<Integer>> ans = new ArrayList<>();
+        Arrays.sort(nums);
+        permuteUnique_helper(nums, used, track, ans);
+        return ans;
+    }
+
+    void permuteUnique_helper(int[] nums, boolean[] used, List<Integer> track, List<List<Integer>> ans) {
+        if (track.size() == nums.length) {
+            ans.add(new ArrayList<>(track));
+            return;
+        }
+        // the level of the for loop represents the index where a number is assigned,
+        // for example, the top level is to choose the first number for index 0.
+        for (int i = 0; i < nums.length; i++) {
+            if (used[i] || (i > 0 && nums[i] == nums[i - 1] && !used[i - 1])) {
+                continue;
+            }
+            used[i] = true;
+            track.add(nums[i]);
+            this.permuteUnique_helper(nums, used, track, ans);
+            track.remove(track.size() - 1);
+            used[i] = false;
         }
     }
 
