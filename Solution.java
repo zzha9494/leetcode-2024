@@ -916,6 +916,29 @@ public class Solution {
         return new ArrayList<>(map.values());
     }
 
+    // Q50
+    public double myPow(double x, int n) {
+        long N = n;
+        return N >= 0 ? myPow_helper(x, N) : 1.0 / myPow_helper(x, -N);
+    }
+
+    double myPow_helper(double x, long N) {
+        double ans = 1;
+        double x_contribute = x;
+
+        // 5 = (101)_2 = 1 * x^1 * x^4
+        while (N > 0) {
+            // last digit is 1, multiply
+            if (N % 2 == 1) {
+                ans *= x_contribute;
+            }
+            x_contribute *= x_contribute;
+            N /= 2;
+
+        }
+        return ans;
+    }
+
     public static void main(String[] args) {
         // Solution s = new Solution();
 

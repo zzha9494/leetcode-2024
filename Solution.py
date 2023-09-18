@@ -910,3 +910,13 @@ class Solution:
             mp[key].append(s)
 
         return list(mp.values())
+
+    def myPow(self, x: float, n: int) -> float:
+        """Q50"""
+        # closure, helper can access outside variables such as x
+        def myPow_helper(n: int) -> float:
+            if n == 0:
+                return 1
+            half = myPow_helper(n // 2)
+            return half * half if n % 2 == 0 else half * half * x
+        return myPow_helper(n) if n >= 0 else 1.0 / myPow_helper(-n)
