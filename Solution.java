@@ -1103,6 +1103,12 @@ public class Solution {
         return ans.toArray(new int[ans.size()][]);
     }
 
+    // Q58
+    public int lengthOfLastWord(String s) {
+        String[] strs = s.split("\\s+");
+        return strs[strs.length - 1].length();
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {

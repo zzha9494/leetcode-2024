@@ -1046,6 +1046,18 @@ class Solution:
                 ans[-1][1] = max(ans[-1][1], e[1])
         return ans
 
+    def lengthOfLastWord(self, s: str) -> int:
+        """Q58"""
+        s = s.rstrip()
+        ans = 0
+        for c in s[::-1]:
+            if c != " ":
+                ans += 1
+            else:
+                break
+        return ans
+
+
 # ----------------------------------------------------
 
 # s = Solution()
