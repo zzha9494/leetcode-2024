@@ -956,7 +956,25 @@ class Solution:
         solveNQueens_helper(0)
         return ans
 
+    def totalNQueens(self, n: int) -> int:
+        """Q52"""
+        def totalNQueens_helper(row):
+            if row == n:
+                nonlocal ans
+                ans += 1
+            else:
+                for column in range(n):
+                    if columns[column] or diagonal_1[column-row] or diagonal_2[column+row]:
+                        continue
+                    columns[column], diagonal_1[column-row], diagonal_2[column+row] =\
+                        True, True, True
+                    totalNQueens_helper(row + 1)
+                    columns[column], diagonal_1[column-row], diagonal_2[column+row] =\
+                        False, False, False
 
-s = Solution()
-print(s.solveNQueens(4))
-a = "..."
+        columns = [False] * n
+        diagonal_1 = [False] * (2 * n - 1)  # \: -i+j # 2(n-1) + 1
+        diagonal_2 = [False] * (2 * n - 1)  # /: i+j
+        ans = 0
+        totalNQueens_helper(0)
+        return ans

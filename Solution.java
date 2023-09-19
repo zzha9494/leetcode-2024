@@ -977,6 +977,34 @@ public class Solution {
         }
     }
 
+    // Q52
+    public int totalNQueens(int n) {
+        boolean[][] records = { new boolean[n], new boolean[2 * n - 1], new boolean[2 * n - 1] };
+        return this.totalNQueens_helper(0, n, records);
+    }
+
+    int totalNQueens_helper(int row, int n, boolean[][] records) {
+        int ans = 0;
+        if (row == n) {
+            ans++;
+        }
+        for (int column = 0; column < n; column++) {
+            if (records[0][column] || records[1][n - 1 + column - row] || records[2][column + row]) {
+                continue;
+            }
+            records[0][column] = true;
+            records[1][n - 1 + column - row] = true;
+            records[2][+column + row] = true;
+            ans += this.totalNQueens_helper(row + 1, n, records);
+            records[0][column] = false;
+            records[1][n - 1 + column - row] = false;
+            records[2][column + row] = false;
+        }
+        return ans;
+    }
+
+    // ------------------------------------------------------------------------
+
     public static void main(String[] args) {
         // Solution s = new Solution();
 
