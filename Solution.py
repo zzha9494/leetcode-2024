@@ -1008,3 +1008,18 @@ class Solution:
             # zip() returns an iterator of tuples, where the i-th tuple contains the i-th element from each of the argument iterables.
             matrix = list(zip(*matrix))[::-1]
         return ans
+
+    def canJump(self, nums: List[int]) -> bool:
+        """Q55"""
+        maxPosition = 0
+        for i in range(len(nums)):
+            if i > maxPosition:
+                break
+            maxPosition = max(maxPosition, i + nums[i])
+            if maxPosition >= len(nums) - 1:
+                return True
+        return False
+
+# ----------------------------------------------------
+
+# s = Solution()
