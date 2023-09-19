@@ -1078,6 +1078,31 @@ public class Solution {
         return ans.toArray(new int[ans.size()][]);
     }
 
+    // Q57
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        int left = newInterval[0], right = newInterval[1];
+        boolean inserted = false;
+        List<int[]> ans = new ArrayList<>();
+        for (int[] e : intervals) {
+            if (e[1] < left) {
+                ans.add(e);
+            } else if (right < e[0]) {
+                if (!inserted) {
+                    ans.add(new int[] { left, right });
+                    inserted = true;
+                }
+                ans.add(e);
+            } else {
+                left = Math.min(left, e[0]);
+                right = Math.max(right, e[1]);
+            }
+        }
+        if (!inserted) {
+            ans.add(new int[] { left, right });
+        }
+        return ans.toArray(new int[ans.size()][]);
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {

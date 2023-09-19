@@ -1034,6 +1034,17 @@ class Solution:
         ans.append([left, right])
         return ans
 
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        """Q57"""
+        intervals.append(newInterval)
+        intervals.sort(key=lambda x: x[0])
+        ans = []
+        for e in intervals:
+            if not ans or e[0] > ans[-1][1]:
+                ans.append(e)
+            else:
+                ans[-1][1] = max(ans[-1][1], e[1])
+        return ans
 
 # ----------------------------------------------------
 
