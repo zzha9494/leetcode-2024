@@ -1109,6 +1109,33 @@ public class Solution {
         return strs[strs.length - 1].length();
     }
 
+    // Q59
+    public int[][] generateMatrix(int n) {
+        int[][] matrix = new int[n][n];
+        int num = 1;
+        int top = 0, right = n - 1, bottom = n - 1, left = 0;
+
+        while (top <= bottom && left <= right) {
+            for (int j = left; j <= right; j++) {
+                matrix[top][j] = num++;
+            }
+            for (int i = top + 1; i <= bottom; i++) {
+                matrix[i][right] = num++;
+            }
+            for (int j = right - 1; j >= left; j--) {
+                matrix[bottom][j] = num++;
+            }
+            for (int i = bottom - 1; i > top; i--) {
+                matrix[i][left] = num++;
+            }
+            top++;
+            right--;
+            bottom--;
+            left++;
+        }
+        return matrix;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
