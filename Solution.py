@@ -978,3 +978,23 @@ class Solution:
         ans = 0
         totalNQueens_helper(0)
         return ans
+
+    def maxSubArray(self, nums: List[int]) -> int:
+        """Q53"""
+        # dp[i] represents the max subarray sum until i (including)
+        dp = [nums[0]]
+        # dp[i] = nums[i] + dp[i-1], if dp[i-1] > 0 (positive contribution)
+        # dp[i] = nums[i], if if dp[i-1] <= 0 (negative contribution)
+        for i in range(1, len(nums)):
+            dp.append(nums[i] if dp[-1] < 0 else dp[-1] + nums[i])
+        return max(dp)
+
+    def maxSubArray(self, nums: List[int]) -> int:
+        """Q53 alternative"""
+        # because dp[i] is only related to dp[i-1] and nums[i], can save space from o(n) to o(1)
+        ans = nums[0]
+        pre = 0  # when i, it means dp[i-1]
+        for i in range(len(nums)):
+            pre = max(pre + nums[i], nums[i])
+            ans = max(ans, pre)
+        return ans

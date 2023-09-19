@@ -1003,6 +1003,16 @@ public class Solution {
         return ans;
     }
 
+    // Q53
+    public int maxSubArray(int[] nums) {
+        int ans = nums[0], pre = 0;
+        for (int x : nums) {
+            pre = Math.max(x, pre + x);
+            ans = Math.max(ans, pre);
+        }
+        return ans;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
