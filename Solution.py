@@ -998,3 +998,13 @@ class Solution:
             pre = max(pre + nums[i], nums[i])
             ans = max(ans, pre)
         return ans
+
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        """Q54"""
+        ans = []
+        while matrix:
+            ans += matrix.pop(0)
+            # *matrix returns a iterator of each row
+            # zip() returns an iterator of tuples, where the i-th tuple contains the i-th element from each of the argument iterables.
+            matrix = list(zip(*matrix))[::-1]
+        return ans

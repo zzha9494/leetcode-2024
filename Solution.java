@@ -1013,6 +1013,39 @@ public class Solution {
         return ans;
     }
 
+    // Q54
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> ans = new ArrayList<>();
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return ans;
+        }
+        int rows = matrix.length, columns = matrix[0].length;
+        int left = 0, right = columns - 1, top = 0, bottom = rows - 1;
+        while (true) {
+            for (int j = left; j <= right; j++) {
+                ans.add(matrix[top][j]);
+            }
+            if (++top > bottom)
+                break;
+            for (int i = top; i <= bottom; i++) {
+                ans.add(matrix[i][right]);
+            }
+            if (left > --right)
+                break;
+            for (int j = right; j >= left; j--) {
+                ans.add(matrix[bottom][j]);
+            }
+            if (top > --bottom)
+                break;
+            for (int i = bottom; i >= top; i--) {
+                ans.add(matrix[i][left]);
+            }
+            if (++left > right)
+                break;
+        }
+        return ans;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
