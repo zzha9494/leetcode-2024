@@ -1059,6 +1059,25 @@ public class Solution {
         return false;
     }
 
+    // Q56
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            public int compare(int[] i1, int[] i2) {
+                return i1[0] - i2[0];
+            }
+        });
+
+        Deque<int[]> ans = new LinkedList<>();
+        for (int[] interval : intervals) {
+            if (ans.isEmpty() || ans.peek()[1] < interval[0]) {
+                ans.push(interval);
+            } else {
+                ans.peek()[1] = Math.max(ans.peek()[1], interval[1]);
+            }
+        }
+        return ans.toArray(new int[ans.size()][]);
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {

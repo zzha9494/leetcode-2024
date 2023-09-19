@@ -1020,6 +1020,21 @@ class Solution:
                 return True
         return False
 
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        """Q56"""
+        intervals.sort(key=lambda x: x[0])
+        ans = []
+        left, right = intervals[0]
+        for e in intervals:
+            if e[0] > right:
+                ans.append([left, right])
+                left, right = e
+            else:
+                right = max(right, e[1])
+        ans.append([left, right])
+        return ans
+
+
 # ----------------------------------------------------
 
 # s = Solution()
