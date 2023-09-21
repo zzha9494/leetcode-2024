@@ -1082,8 +1082,54 @@ class Solution:
             left += 1
         return matrix
 
+    def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        """Q61"""
+        dummy = ListNode(0, head)
+        cursor = dummy
+        n = 0
+        while cursor.next:
+            n += 1
+            cursor = cursor.next
+
+        if not n or not k or not k % n:
+            return head
+
+        k %= n
+        fast, slow = dummy, dummy
+        for i in range(k):
+            fast = fast.next
+        while fast.next:
+            fast = fast.next
+            slow = slow.next
+        fast.next = head
+        head = slow.next
+        slow.next = None
+        return head
+
+    def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        """Q61 alternative"""
+        if k == 0 or not head or not head.next:
+            return head
+
+        n = 1
+        cursor = head
+        while cursor.next:
+            cursor = cursor.next
+            n += 1
+
+        if (add := n-k % n) == n:
+            return head
+
+        cursor.next = head
+        while add:
+            cursor = cursor.next
+            add -= 1
+
+        newHead = cursor.next
+        cursor.next = None
+        return newHead
+
 
 # ----------------------------------------------------
-
 s = Solution()
 print(s.generateMatrix(4))

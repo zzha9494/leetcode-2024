@@ -1136,6 +1136,34 @@ public class Solution {
         return matrix;
     }
 
+    // Q61
+    public ListNode rotateRight(ListNode head, int k) {
+        if (k == 0 || head == null || head.next == null) {
+            return head;
+        }
+
+        int n = 1;
+        ListNode cursor = head;
+        while (cursor.next != null) {
+            cursor = cursor.next;
+            n++;
+        }
+
+        k %= n;
+        if (k == 0) {
+            return head;
+        }
+
+        int add = n - k;
+        cursor.next = head;
+        while (add-- > 0) {
+            cursor = cursor.next;
+        }
+        ListNode newHead = cursor.next;
+        cursor.next = null;
+        return newHead;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
