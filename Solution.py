@@ -1182,10 +1182,22 @@ class Solution:
                     grid[i][j] = grid[i][j] + min(grid[i-1][j], grid[i][j-1])
         return grid[m-1][n-1]
 
+    def plusOne(self, digits: List[int]) -> List[int]:
+        """Q66"""
+        n = len(digits)
+        for i in range(n):
+            if digits[n-1-i] == 9:
+                continue
+            if i == 0:
+                digits[-1] += 1
+                return digits
+            digits[n-1-i] += 1
+            digits[-i:] = [0] * (i)  # 0 to i-1 is 9
+            return digits
+        return [1] + [0] * n
+
 
 # ----------------------------------------------------
 s = Solution()
-a = [[1, 3, 1],
-     [1, 5, 1],
-     [4, 2, 1]]
-print(s.minPathSum(a))
+a = [8, 9, 9, 9]
+print(s.plusOne(a))
