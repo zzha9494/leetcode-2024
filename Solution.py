@@ -1151,6 +1151,22 @@ class Solution:
         """Q62 alternative"""
         return math.comb(m + n - 2, n-1)  # choose n+1 from m-1 + n-1
 
+    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+        """Q63"""
+        m = len(obstacleGrid)
+        n = len(obstacleGrid[0])
+        dp = [0] * n
+        dp[0] = 0 if obstacleGrid[0][0] else 1
+
+        for i in range(m):
+            for j in range(n):
+                if obstacleGrid[i][j]:
+                    dp[j] = 0
+                    continue
+                if j >= 1:
+                    dp[j] += dp[j-1]
+        return dp[n-1]
+
 
 # ----------------------------------------------------
 s = Solution()
