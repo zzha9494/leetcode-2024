@@ -1,6 +1,7 @@
 import collections
-from functools import lru_cache
 import itertools
+import math
+from functools import lru_cache
 from typing import List, Optional
 
 
@@ -1128,6 +1129,27 @@ class Solution:
         newHead = cursor.next
         cursor.next = None
         return newHead
+
+    def uniquePaths(self, m: int, n: int) -> int:
+        """Q62"""
+        dp = [[1] * n] + [[1] + [0] * (n-1) for _ in range(m-1)]
+        for i in range(1, m):
+            for j in range(1, n):
+                dp[i][j] = dp[i-1][j] + dp[i][j-1]
+        return dp[m-1][n-1]
+
+    def uniquePaths(self, m: int, n: int) -> int:
+        """Q62 alternative"""
+        n, m = min(m, n), max(m, n)  # reduce the space to O(min(m, n))
+        dp = [1] * n
+        for i in range(1, m):
+            for j in range(1, n):
+                dp[j] += dp[j-1]
+        return dp[n-1]
+
+    def uniquePaths(self, m: int, n: int) -> int:
+        """Q62 alternative"""
+        return math.comb(m + n - 2, n-1)  # choose n+1 from m-1 + n-1
 
 
 # ----------------------------------------------------
