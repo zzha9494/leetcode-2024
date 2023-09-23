@@ -1196,6 +1196,10 @@ class Solution:
             return digits
         return [1] + [0] * n
 
+    def addBinary(self, a: str, b: str) -> str:
+        """Q67"""
+        return bin(int(a, 2) + int(b, 2))[2:]
+
 
 # ----------------------------------------------------
 s = Solution()
