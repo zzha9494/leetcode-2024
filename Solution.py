@@ -1211,8 +1211,17 @@ class Solution:
                 r = m
         return l
 
+    def climbStairs(self, n: int) -> int:
+        """Q70"""
+        p, q, r = 0, 0, 1
+        for i in range(n):
+            p = q
+            q = r
+            r = p+q
+        return r
+
 
 # ----------------------------------------------------
 s = Solution()
-a = 0
-print(s.mySqrt(a))
+a = 4
+print(s.climbStairs(a))
