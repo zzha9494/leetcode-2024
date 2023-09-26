@@ -1220,8 +1220,21 @@ class Solution:
             r = p+q
         return r
 
+    def simplifyPath(self, path: str) -> str:
+        """Q71"""
+        path = path.split("/")
+        stack = []
+        for e in path:
+            if not e or e == "." or (e == ".." and not stack):
+                continue
+            if e == "..":
+                stack.pop()
+            else:
+                stack.append(e)
+        return "/" + "/".join(stack)
+
 
 # ----------------------------------------------------
 s = Solution()
-a = 4
-print(s.climbStairs(a))
+a = "/../"
+print(s.simplifyPath(a))

@@ -1,3 +1,4 @@
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -1268,6 +1269,30 @@ public class Solution {
             r = p + q;
         }
         return r;
+    }
+
+    // Q71
+    public String simplifyPath(String path) {
+        String[] names = path.split("/");
+        Deque<String> stack = new ArrayDeque<>();
+        for (String name : names) {
+            if ("..".equals(name)) {
+                if (!stack.isEmpty()) {
+                    stack.pop();
+                }
+            } else if (!name.isEmpty() && !".".equals(name)) {
+                stack.push(name);
+            }
+        }
+        if (stack.isEmpty()) {
+            return "/";
+        }
+        StringBuilder ans = new StringBuilder();
+        while (!stack.isEmpty()) {
+            ans.append("/");
+            ans.append(stack.removeLast());
+        }
+        return ans.toString();
     }
 
     // ------------------------------------------------------------------------
