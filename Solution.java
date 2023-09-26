@@ -1295,10 +1295,32 @@ public class Solution {
         return ans.toString();
     }
 
+    // Q72
+    public int minDistance(String word1, String word2) {
+        char[] ch1 = word1.toCharArray(), ch2 = word2.toCharArray(); // pre-process to save time when comparing char
+        int[] dp = new int[ch2.length + 1];
+        Arrays.setAll(dp, i -> i);
+        int leftUp, temp;
+        for (int i = 1; i < ch1.length + 1; i++) {
+            leftUp = dp[0];
+            dp[0] = i;
+            for (int j = 1; j < ch2.length + 1; j++) {
+                temp = dp[j];
+                dp[j] = Math.min(Math.min(1 + dp[j], dp[j - 1] + 1),
+                        leftUp + (ch1[i - 1] == ch2[j - 1] ? 0 : 1));
+                leftUp = temp;
+            }
+        }
+        return dp[ch2.length];
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
-        // Solution s = new Solution();
+        Solution s = new Solution();
+        String a = "horse";
+        String b = "ros";
+        System.out.println(s.minDistance(a, b));
 
     }
 }

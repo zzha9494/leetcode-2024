@@ -1233,6 +1233,23 @@ class Solution:
                 stack.append(e)
         return "/" + "/".join(stack)
 
+    def minDistance(self, word1: str, word2: str) -> int:
+        """Q72"""
+        # https://leetcode.cn/problems/edit-distance/solutions/188223/bian-ji-ju-chi-by-leetcode-solution/comments/331399
+        m, n = len(word1), len(word2)
+        dp = [i for i in range(n + 1)]  # 0 ... n
+        for i in range(1, m + 1):
+            leftUp = dp[0]  # keep dp[i-1][j-1]
+            dp[0] = i
+            for j in range(1, n + 1):
+                dp[j], leftUp = min(
+                    1 + dp[j],  # "abcde"->"abcd"->"fgh"
+                    dp[j-1] + 1,  # "abcde"->"fg"->"fgh"
+                    # "abcde"->"fge"->"fgh"
+                    leftUp + int(word1[i-1] != word2[j-1])
+                ), dp[j]
+        return dp[-1]
+
 
 # ----------------------------------------------------
 s = Solution()
