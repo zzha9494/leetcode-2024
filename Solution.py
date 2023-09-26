@@ -1200,8 +1200,19 @@ class Solution:
         """Q67"""
         return bin(int(a, 2) + int(b, 2))[2:]
 
+    def mySqrt(self, x: int) -> int:
+        """Q69"""
+        l, r = -1, x+1
+        while l + 1 < r:
+            m = (l + r)//2
+            if m * m <= x:
+                l = m
+            else:
+                r = m
+        return l
+
 
 # ----------------------------------------------------
 s = Solution()
-a = [8, 9, 9, 9]
-print(s.plusOne(a))
+a = 0
+print(s.mySqrt(a))
