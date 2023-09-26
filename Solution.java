@@ -1356,6 +1356,25 @@ public class Solution {
         }
     }
 
+    // Q74
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int m = matrix.length, n = matrix[0].length;
+        int l = -1, r = m * n;
+        while (l + 1 != r) {
+            int mid = (l + r) / 2;
+            int i = mid / n, j = mid % n;
+            if (matrix[i][j] == target) {
+                return true;
+            }
+            if (matrix[i][j] < target) {
+                l = mid;
+            } else {
+                r = mid;
+            }
+        }
+        return false;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
