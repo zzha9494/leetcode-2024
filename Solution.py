@@ -1289,10 +1289,22 @@ class Solution:
                 r = mid
         return False
 
+    def sortColors(self, nums: List[int]) -> None:
+        """75"""
+        pointer_zero, pointer_two = 0, len(nums) - 1
+        i = 0
+        while i <= pointer_two:
+            # prevent index out of range
+            while i <= pointer_two and nums[i] == 2:
+                nums[i], nums[pointer_two] = nums[pointer_two], nums[i]
+                pointer_two -= 1
+            if nums[i] == 0:
+                nums[i], nums[pointer_zero] = nums[pointer_zero], nums[i]
+                pointer_zero += 1
+            i += 1
+
 
 # ----------------------------------------------------
 s = Solution()
-a = [[1, 3, 5, 7],
-     [10, 11, 16, 20],
-     [23, 30, 34, 60]]
-print(s.searchMatrix(a, 3))
+a = [2]
+print(s.sortColors(a))
