@@ -1334,8 +1334,22 @@ class Solution:
 
         return s[ans[0]: ans[1] + 1] if ans[1] != float('inf') else ""
 
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        """Q77"""
+        return list(itertools.combinations(range(1, n+1), k))
+
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        """Q77 alternative"""
+        ans = []
+        if k == 1:
+            return [[i] for i in range(1, n+1)]
+        if k == n:
+            return [list(range(1, n+1))]
+        # choosing 2 from [1,2,3,4] equals to
+        # choosing 1 from [1,2,3] + [4] plus choosing 2 from [1,2,3]
+        return [(i + [n]) for i in self.combine(n-1, k-1)] + self.combine(n-1, k)
+
 
 # ----------------------------------------------------
 s = Solution()
-a = "ADOBECODEBANC"
-print(s.minWindow(a, "ABC"))
+print(s.combine(4, 2))

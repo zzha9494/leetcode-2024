@@ -1425,6 +1425,26 @@ public class Solution {
         return ansLen == Integer.MAX_VALUE ? "" : s.substring(ans, ans + ansLen);
     }
 
+    // Q77
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> ans = new ArrayList<>();
+        this.combine_helper(1, n, k, new ArrayList<>(), ans);
+        return ans;
+    }
+
+    void combine_helper(int current, int n, int k, List<Integer> path, List<List<Integer>> ans) {
+        if (k == 0) {
+            ans.add(new ArrayList<>(path));
+            return;
+        }
+        // n-current+1 >= k
+        for (int i = current; i <= n + 1 - k; i++) {
+            path.add(i);
+            this.combine_helper(i + 1, n, k - 1, path, ans);
+            path.remove(path.size() - 1);
+        }
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
