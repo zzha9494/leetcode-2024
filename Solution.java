@@ -1390,6 +1390,41 @@ public class Solution {
         }
     }
 
+    // Q76
+    public String minWindow(String s, String t) {
+        Map<Character, Integer> need = new HashMap<>();
+        for (char c : t.toCharArray()) {
+            need.put(c, need.getOrDefault(c, 0) + 1);
+        }
+
+        int ans = 0, ansLen = Integer.MAX_VALUE, counter = t.length(), left = 0;
+
+        for (int right = 0; right < s.length(); right++) {
+            char c = s.charAt(right);
+            if (need.containsKey(c)) {
+                if (need.get(c) > 0) {
+                    counter--;
+                }
+                need.put(c, need.get(c) - 1);
+            }
+            while (counter == 0) {
+                if (right - left < ansLen) {
+                    ans = left;
+                    ansLen = right - left + 1;
+                }
+                c = s.charAt(left);
+                left++;
+                if (need.containsKey(c)) {
+                    need.put(c, need.get(c) + 1);
+                    if (need.get(c) > 0) {
+                        counter++;
+                    }
+                }
+            }
+        }
+        return ansLen == Integer.MAX_VALUE ? "" : s.substring(ans, ans + ansLen);
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {

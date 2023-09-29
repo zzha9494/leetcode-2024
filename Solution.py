@@ -1303,8 +1303,39 @@ class Solution:
                 pointer_zero += 1
             i += 1
 
+    def minWindow(self, s: str, t: str) -> str:
+        """Q76"""
+        need = collections.Counter(t)
+        ans = [0, float('inf')]
+        counter = len(t)
+        left = 0
+        for right, char in enumerate(s):
+            if need[char] > 0:
+                counter -= 1
+            # every char will be deducted by 1
+            need[char] -= 1
+            if counter == 0:
+                while True:
+                    c = s[left]
+                    if need[c] == 0:
+                        # for char not needed, right minus A times, left plus B time
+                        # A>=B, thus not break when char not needed
+                        break
+                    need[c] += 1
+                    left += 1
+
+                if right - left < ans[1] - ans[0]:
+                    ans = [left, right]
+
+                # remove a char needed
+                need[s[left]] += 1
+                counter += 1
+                left += 1
+
+        return s[ans[0]: ans[1] + 1] if ans[1] != float('inf') else ""
+
 
 # ----------------------------------------------------
 s = Solution()
-a = [2]
-print(s.sortColors(a))
+a = "ADOBECODEBANC"
+print(s.minWindow(a, "ABC"))
