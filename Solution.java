@@ -1512,13 +1512,29 @@ public class Solution {
         return found;
     }
 
+    // Q80
+    public int removeDuplicates2(int[] nums) {
+        int n = nums.length;
+        if (n <= 2) {
+            return n;
+        }
+        int slow = 2, fast = 2;
+        while (fast < n) {
+            if (nums[slow - 2] != nums[fast]) {
+                nums[slow++] = nums[fast];
+            }
+            fast++;
+        }
+        return slow;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
         Solution s = new Solution();
-        String a = "horse";
-        String b = "ros";
-        System.out.println(s.minDistance(a, b));
+        int[] nums = { 1, 1, 3, 3, 4 };
+
+        System.out.println(s.removeDuplicates2(nums));
 
     }
 }

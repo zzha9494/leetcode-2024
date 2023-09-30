@@ -1402,8 +1402,22 @@ class Solution:
                 exist_helper(i, j, 0)
         return ans
 
+    def removeDuplicates(self, nums: List[int]) -> int:
+        """Q80"""
+        n = len(nums)
+        if n <= 2:
+            return n
+        # [slow - 1] points to last valid pisition, [fast] points to current number to check
+        slow = 2
+        for fast in range(2, n):
+            if nums[fast] != nums[slow - 2]:
+                nums[slow] = nums[fast]
+                slow += 1
+        return slow
+
 
 # ----------------------------------------------------
 s = Solution()
-board = [["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]]
-print(s.exist(board, "ABC"))
+a = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3]
+print(s.removeDuplicates(a))
+print(a)
