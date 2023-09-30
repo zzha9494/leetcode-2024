@@ -1463,6 +1463,55 @@ public class Solution {
         return ans;
     }
 
+    // Q79
+    public boolean exist(char[][] board, String word) {
+        int m = board.length, n = board[0].length;
+        boolean visited[][] = new boolean[m][n];
+
+        Map<Character, Integer> counter = new HashMap<>();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                counter.put(board[i][j], counter.getOrDefault(board[i][j], 0) + 1);
+            }
+        }
+        for (int i = 0; i < word.length() / 2; i++) {
+            int l = counter.getOrDefault(word.charAt(i), 0);
+            int r = counter.getOrDefault(word.charAt(word.length() - 1 - i), 0);
+            if (l > r) {
+                word = new StringBuilder(word).reverse().toString();
+            } else if (l == r) {
+                continue;
+            }
+            break;
+        }
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (this.exist_helper(i, j, 0, board, word, visited)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    boolean exist_helper(int i, int j, int current, char[][] board, String word, boolean[][] visited) {
+        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || visited[i][j]
+                || word.charAt(current) != board[i][j]) {
+            return false;
+        }
+        if (current == word.length() - 1) {
+            return true;
+        }
+        visited[i][j] = true;
+        boolean found = exist_helper(i - 1, j, current + 1, board, word, visited) ||
+                exist_helper(i + 1, j, current + 1, board, word, visited) ||
+                exist_helper(i, j - 1, current + 1, board, word, visited) ||
+                exist_helper(i, j + 1, current + 1, board, word, visited);
+        visited[i][j] = false;
+        return found;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {

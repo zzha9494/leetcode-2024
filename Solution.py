@@ -1361,7 +1361,49 @@ class Solution:
             ans += temp
         return ans
 
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        """Q79"""
+        def exist_helper(i, j, current):
+            nonlocal ans
+            if ans or visited[i][j] or word[current] != board[i][j]:
+                return
+            if current == len(word) - 1:
+                ans = True
+                return
+            visited[i][j] = True
+            if i > 0:
+                exist_helper(i-1, j, current + 1)
+            if i < m-1:
+                exist_helper(i+1, j, current + 1)
+            if j > 0:
+                exist_helper(i, j-1, current + 1)
+            if j < n-1:
+                exist_helper(i, j+1, current + 1)
+            visited[i][j] = False
+
+        # if occurrence of left char is greater than right char in board, flip
+        board_counter = collections.Counter([c for row in board for c in row])
+        for i in range(len(word)//2):
+            l, r = board_counter[word[i]], board_counter[word[-i]]
+            if l > r:
+                word = word[::-1]
+            elif l == r:
+                continue
+            break
+
+        m, n = len(board), len(board[0])
+        visited = [[False] * n for _ in range(m)]
+        ans = False
+
+        for i in range(m):
+            for j in range(n):
+                if ans:
+                    return ans
+                exist_helper(i, j, 0)
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
-print(s.subsets([1, 2, 3]))
+board = [["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]]
+print(s.exist(board, "ABC"))
