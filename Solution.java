@@ -1445,6 +1445,24 @@ public class Solution {
         }
     }
 
+    // Q78
+    public List<List<Integer>> subsets(int[] nums) {
+        List<Integer> t = new ArrayList<>();
+        List<List<Integer>> ans = new ArrayList<>();
+        int n = nums.length;
+        for (int bin = 0; bin < (1 << n); bin++) {
+            t.clear();
+            for (int i = 0; i < n; i++) {
+                // check the i-th in binary is 1
+                if ((bin & (1 << i)) != 0) {
+                    t.add(nums[i]);
+                }
+            }
+            ans.add(new ArrayList<>(t));
+        }
+        return ans;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {

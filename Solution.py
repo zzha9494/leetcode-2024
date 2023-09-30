@@ -1349,7 +1349,19 @@ class Solution:
         # choosing 1 from [1,2,3] + [4] plus choosing 2 from [1,2,3]
         return [(i + [n]) for i in self.combine(n-1, k-1)] + self.combine(n-1, k)
 
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        """Q78"""
+        ans = []
+        if len(nums) == 0:
+            ans.append([])
+        else:
+            temp = self.subsets(nums[:-1])
+            for e in temp:
+                ans.append(e + [nums[-1]])
+            ans += temp
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
-print(s.combine(4, 2))
+print(s.subsets([1, 2, 3]))
