@@ -1468,7 +1468,25 @@ class Solution:
                 cursor.next = cursor.next.next
         return dummy.next
 
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        """Q84"""
+        n = len(heights)
+        if n == 1:
+            return heights[0]
+
+        heights = [0] + heights + [0]
+        ans = 0
+        stack = [0]  # stores ascending heights
+        for i in range(1, n + 2):
+            while heights[stack[-1]] > heights[i]:
+                # current_height = heights[stack.pop()]
+                # current_width = i - 1 - stack[-1]
+                ans = max(ans, heights[stack.pop()] * (i - 1 - stack[-1]))
+            stack.append(i)
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
-print(s)
+a = [6, 7, 5, 2, 4, 5, 9, 3]
+print(s.largestRectangleArea(a))

@@ -1591,6 +1591,28 @@ public class Solution {
         return dummy.next;
     }
 
+    // Q84
+    public int largestRectangleArea(int[] heights) {
+        int n = heights.length;
+        if (n == 1) {
+            return heights[0];
+        }
+        int ans = 0;
+        int[] newHeights = new int[n + 2];
+        System.arraycopy(heights, 0, newHeights, 1, n);
+
+        Deque<Integer> stack = new ArrayDeque<>();
+        stack.addFirst(0);
+
+        for (int i = 1; i < n + 2; i++) {
+            while (newHeights[stack.getFirst()] > newHeights[i]) {
+                ans = Math.max(ans, newHeights[stack.removeFirst()] * (i - 1 - stack.getFirst()));
+            }
+            stack.addFirst(i);
+        }
+        return ans;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
