@@ -1415,9 +1415,37 @@ class Solution:
                 slow += 1
         return slow
 
+    def search(self, nums: List[int], target: int) -> bool:
+        """Q81"""
+        l, r = 0, len(nums) - 1
+        while l <= r:
+            m = (l + r) // 2
+            if nums[m] == target:
+                return True
+
+            if nums[l] == nums[m] == nums[r]:
+                # no: [1, 2, 1]
+                # yes: [3, 1, 2, 3, 3, 3, 3]
+                l += 1
+                r -= 1
+            elif nums[l] <= nums[m]:
+                # left part ascending
+                if nums[l] <= target < nums[m]:
+                    # search left
+                    r = m - 1
+                else:
+                    l = m + 1
+            else:
+                # right part ascending
+                if nums[m] < target <= nums[r]:
+                    # search right
+                    l = m + 1
+                else:
+                    r = m - 1
+        return False
+
 
 # ----------------------------------------------------
 s = Solution()
-a = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3]
-print(s.removeDuplicates(a))
-print(a)
+a = [1, 2, 1]
+print(s.search1(a, 1))
