@@ -1485,6 +1485,29 @@ class Solution:
             stack.append(i)
         return ans
 
+    def maximalRectangle(self, matrix: List[List[str]]) -> int:
+        """Q85"""
+        def maximalRectangle_helper(heights: List[int]) -> int:
+            # same as Q84
+            temp = heights.copy()
+            temp.append(0)
+            stack = [-1]
+            ans = 0
+            for i, height in enumerate(temp):
+                while temp[stack[-1]] > height:
+                    ans = max(ans, temp[stack.pop()] * (i - 1 - stack[-1]))
+                stack.append(i)
+            return ans
+
+        ans, n = 0, len(matrix[0])
+        current_row = [0] * n
+        # calculate rectangle for every row
+        for row in matrix:
+            current_row = [(current_row[i] + 1) if row[i]
+                           == "1" else 0 for i in range(n)]
+            ans = max(ans, maximalRectangle_helper(current_row))
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()

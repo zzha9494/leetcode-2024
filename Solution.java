@@ -1613,6 +1613,34 @@ public class Solution {
         return ans;
     }
 
+    // Q85
+    public int maximalRectangle(char[][] matrix) {
+        int n = matrix[0].length, ans = 0;
+        int[] heights = new int[n];
+        for (char[] row : matrix) {
+            Arrays.setAll(heights, i -> row[i] == '0' ? 0 : heights[i] + 1);
+            ans = Math.max(ans, this.maximalRectangle_helper(heights));
+        }
+        return ans;
+    }
+
+    int maximalRectangle_helper(int[] heights) {
+        int ans = 0, n = heights.length;
+        int[] temp = new int[n + 2];
+        System.arraycopy(heights, 0, temp, 1, n);
+
+        Deque<Integer> stack = new ArrayDeque<>();
+        stack.addFirst(0);
+
+        for (int i = 1; i < temp.length; i++) {
+            while (temp[stack.getFirst()] > temp[i]) {
+                ans = Math.max(ans, temp[stack.removeFirst()] * (i - 1 - stack.getFirst()));
+            }
+            stack.addFirst(i);
+        }
+        return ans;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
