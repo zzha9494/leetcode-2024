@@ -1577,6 +1577,20 @@ public class Solution {
         return dummy.next;
     }
 
+    // Q83
+    public ListNode deleteDuplicates1(ListNode head) {
+        ListNode dummy = new ListNode(Integer.MAX_VALUE, head);
+        ListNode cursor = dummy;
+        while (cursor.next != null) {
+            if (cursor.val != cursor.next.val) {
+                cursor = cursor.next;
+            } else {
+                cursor.next = cursor.next.next;
+            }
+        }
+        return dummy.next;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {

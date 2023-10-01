@@ -1458,6 +1458,16 @@ class Solution:
                     cursor.next = cursor.next.next
         return dummy.next
 
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        """Q83"""
+        dummy = ListNode(None, head)
+        cursor = dummy
+        while cursor.next:
+            cursor = cursor.next
+            while cursor.next and cursor.next.val == cursor.val:
+                cursor.next = cursor.next.next
+        return dummy.next
+
 
 # ----------------------------------------------------
 s = Solution()
