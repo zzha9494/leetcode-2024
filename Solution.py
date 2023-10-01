@@ -1444,8 +1444,21 @@ class Solution:
                     r = m - 1
         return False
 
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        """Q82"""
+        dummy = ListNode(None, head)
+        cursor = dummy
+        while cursor.next and cursor.next.next:
+            if cursor.next.val != cursor.next.next.val:
+                cursor = cursor.next
+            else:
+                x = cursor.next.val
+                # [1, 2, 3, 3] cursor = 2, x = 3, delete all next val = 3
+                while cursor.next and cursor.next.val == x:
+                    cursor.next = cursor.next.next
+        return dummy.next
+
 
 # ----------------------------------------------------
 s = Solution()
-a = [1, 2, 1]
-print(s.search1(a, 1))
+print(s)

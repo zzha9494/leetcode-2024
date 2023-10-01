@@ -1560,6 +1560,23 @@ public class Solution {
         return false;
     }
 
+    // Q82
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode dummy = new ListNode(0, head);
+        ListNode cursor = dummy;
+        while (cursor.next != null && cursor.next.next != null) {
+            if (cursor.next.val != cursor.next.next.val) {
+                cursor = cursor.next;
+            } else {
+                int x = cursor.next.val;
+                while (cursor.next != null && cursor.next.val == x) {
+                    cursor.next = cursor.next.next;
+                }
+            }
+        }
+        return dummy.next;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
