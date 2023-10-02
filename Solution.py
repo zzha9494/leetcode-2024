@@ -1541,12 +1541,19 @@ class Solution:
                 nums1[tail] = nums2[p2]
                 p2 -= 1
 
+    def grayCode(self, n: int) -> List[int]:
+        """Q89"""
+        ans = [0]  # n = 1
+        for i in range(1, n+1):
+            for j in range(len(ans)-1, -1, -1):
+                # 00
+                # 01
+                # 11, add 1
+                # 10, add 1
+                ans.append(ans[j] | (1 << (i-1)))
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
-nums1 = [1, 0]
-nums2 = [2]
-n = 1
-m = 1
-print(s.merge(nums1, m, nums2, n))
-print(nums1)
+print(s.grayCode(2))

@@ -1677,6 +1677,17 @@ public class Solution {
         }
     }
 
+    // Q89
+    public List<Integer> grayCode(int n) {
+        List<Integer> ans = new ArrayList<>();
+        // 1 << n is 2**n
+        for (int i = 0; i < 1 << n; i++) {
+            // the i-th is (i 异或 (i // 2))
+            ans.add(i ^ (i >> 1));
+        }
+        return ans;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
