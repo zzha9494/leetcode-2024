@@ -1553,7 +1553,31 @@ class Solution:
                 ans.append(ans[j] | (1 << (i-1)))
         return ans
 
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        """Q90"""
+        nums.sort()
+        n = len(nums)
+        ans = []
+        for bin in range(1 << n):
+            current = []
+            choose = True
+            for i in range(n):
+                # check if the i-th bit in bin is 1
+                if bin & (1 << i) != 0:
+                    # bin >> (i-1) & 1 == 0: check if the (i-1)-th bit is 0
+                    # this condition means, 如果i和i-1重复, 并且i-1没有被选，则当前跳过
+                    # for example, [2, 2, 2, 3]
+                    # 000*, 100*, 110*, 111* valid
+                    # 101*, 011*, 010*, 001* invalid
+                    if i > 0 and nums[i] == nums[i-1] and bin >> (i-1) & 1 == 0:
+                        choose = False
+                        break
+                    current.append(nums[i])
+            if choose:
+                ans.append(current)
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
-print(s.grayCode(2))
+print(s.subsetsWithDup([1, 2, 2]))

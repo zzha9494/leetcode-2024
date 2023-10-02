@@ -1688,6 +1688,31 @@ public class Solution {
         return ans;
     }
 
+    // Q90
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> current = new ArrayList<>();
+        int n = nums.length;
+        Arrays.sort(nums);
+        for (int bin = 0; bin < 1 << n; bin++) {
+            current.clear();
+            boolean choose = true;
+            for (int i = 0; i < n; i++) {
+                if ((1 << i & bin) != 0) {
+                    if (i > 0 && nums[i] == nums[i - 1] && (bin >> (i - 1) & 1) == 0) {
+                        choose = false;
+                        break;
+                    }
+                    current.add(nums[i]);
+                }
+            }
+            if (choose) {
+                ans.add(new ArrayList<>(current));
+            }
+        }
+        return ans;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
