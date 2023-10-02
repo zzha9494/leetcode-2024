@@ -1508,8 +1508,31 @@ class Solution:
             ans = max(ans, maximalRectangle_helper(current_row))
         return ans
 
+    def partition(self, head: Optional[ListNode], x: int) -> Optional[ListNode]:
+        """Q86"""
+        small = ListNode(0, None)
+        samll_head = small
+        large = ListNode(0, None)
+        large_head = large
+        while head:
+            if head.val < x:
+                small.next = head
+                small = small.next
+            else:
+                large.next = head
+                large = large.next
+            head = head.next
+        small.next = large_head.next
+        large.next = None
+        return samll_head.next
+
 
 # ----------------------------------------------------
 s = Solution()
-a = [6, 7, 5, 2, 4, 5, 9, 3]
-print(s.largestRectangleArea(a))
+node6 = ListNode(2)
+node5 = ListNode(5, node6)
+node4 = ListNode(2, node5)
+node3 = ListNode(3, node4)
+node2 = ListNode(4, node3)
+node1 = ListNode(1, node2)
+print(s.partition(node1, 3))
