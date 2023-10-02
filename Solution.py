@@ -1526,13 +1526,27 @@ class Solution:
         large.next = None
         return samll_head.next
 
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        """Q88"""
+        p1 = m-1
+        p2 = n-1
+        for tail in range(m+n-1, -1, -1):
+            if p2 < 0:
+                break
+            # p1 < 0, go to else
+            if p1 >= 0 and nums1[p1] > nums2[p2]:
+                nums1[tail] = nums1[p1]
+                p1 -= 1
+            else:
+                nums1[tail] = nums2[p2]
+                p2 -= 1
+
 
 # ----------------------------------------------------
 s = Solution()
-node6 = ListNode(2)
-node5 = ListNode(5, node6)
-node4 = ListNode(2, node5)
-node3 = ListNode(3, node4)
-node2 = ListNode(4, node3)
-node1 = ListNode(1, node2)
-print(s.partition(node1, 3))
+nums1 = [1, 0]
+nums2 = [2]
+n = 1
+m = 1
+print(s.merge(nums1, m, nums2, n))
+print(nums1)
