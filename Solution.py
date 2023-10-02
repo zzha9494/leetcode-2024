@@ -1577,6 +1577,18 @@ class Solution:
                 ans.append(current)
         return ans
 
+    def numDecodings(self, s: str) -> int:
+        """Q91"""
+        n = len(s)
+        dp = [1] + [0] * n
+        # i-th char
+        for i in range(1, n+1):
+            if s[i-1] != "0":
+                dp[i] += dp[i-1]
+            if i > 1 and s[i-2] != "0" and int(s[i-2:i]) <= 26:
+                dp[i] += dp[i-2]
+        return dp[n]
+
 
 # ----------------------------------------------------
 s = Solution()

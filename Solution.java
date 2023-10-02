@@ -1713,6 +1713,26 @@ public class Solution {
         return ans;
     }
 
+    // Q91
+    public int numDecodings(String s) {
+        int n = s.length();
+        // i-2, i-1, i
+        int[] dp = new int[] { 0, 1, 0 };
+        for (int i = 0; i < n; i++) {
+            dp[2] = 0;
+            if (s.charAt(i) != '0') {
+                dp[2] += dp[1];
+            }
+            if (i > 0 && s.charAt(i - 1) != '0' && (s.charAt(i - 1) - '0') * 10 + (s.charAt(i) - '0') <= 26) {
+                dp[2] += dp[0];
+            }
+            // move left
+            dp[0] = dp[1];
+            dp[1] = dp[2];
+        }
+        return dp[2];
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
