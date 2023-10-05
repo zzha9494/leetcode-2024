@@ -1733,6 +1733,23 @@ public class Solution {
         return dp[2];
     }
 
+    // Q92
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        ListNode dummy = new ListNode(0, head);
+        ListNode pre = dummy;
+        for (int i = 0; i < left - 1; i++) {
+            pre = pre.next;
+        }
+        ListNode current = pre.next;
+        for (int i = 0; i < right - left; i++) {
+            ListNode next = current.next;
+            current.next = next.next;
+            next.next = pre.next;
+            pre.next = next;
+        }
+        return dummy.next;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {

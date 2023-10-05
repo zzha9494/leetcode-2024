@@ -1589,7 +1589,28 @@ class Solution:
                 dp[i] += dp[i-2]
         return dp[n]
 
+    def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
+        """92"""
+        dummy = ListNode(0, head)
+        pre = dummy
+        for _ in range(left-1):
+            pre = pre.next
+        current = pre.next
+        # pre always points to previous node of the first in interval
+        # current points to the first node in interval
+        for _ in range(right - left):
+            next = current.next
+            current.next = next.next
+            next.next = pre.next
+            pre.next = next
+        return dummy.next
+
 
 # ----------------------------------------------------
 s = Solution()
-print(s.subsetsWithDup([1, 2, 2]))
+node5 = ListNode(5)
+node4 = ListNode(4, node5)
+node3 = ListNode(3, node4)
+node2 = ListNode(2, node3)
+node1 = ListNode(1, node2)
+print(s.reverseBetween(node1, 2, 4))
