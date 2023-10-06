@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 // import java.util.Set;
+import java.util.StringJoiner;
 
 class ListNode {
     int val;
@@ -1748,6 +1749,48 @@ public class Solution {
             pre.next = next;
         }
         return dummy.next;
+    }
+
+    // Q93
+    public List<String> restoreIpAddresses(String s) {
+        List<String> ans = new ArrayList<>();
+        int[] segments = new int[4];
+        this.restoreIpAddresses_helper(s, 0, 0, segments, ans);
+        return ans;
+    }
+
+    void restoreIpAddresses_helper(String s, int start, int id, int[] segments, List<String> ans) {
+        if (id == 4) {
+            if (start == s.length()) {
+                StringJoiner ip = new StringJoiner(".");
+                for (int segment : segments) {
+                    ip.add(String.valueOf(segment));
+                }
+                ans.add(ip.toString());
+            }
+            return;
+        }
+
+        if (start == s.length()) {
+            return;
+        }
+
+        if (s.charAt(start) == '0') {
+            segments[id] = 0;
+            this.restoreIpAddresses_helper(s, start + 1, id + 1, segments, ans);
+            return;
+        }
+
+        int addr = 0;
+        for (int end = start; end < s.length(); end++) {
+            addr = addr * 10 + (s.charAt(end) - '0');
+            if (addr > 0 && addr <= 255) {
+                segments[id] = addr;
+                this.restoreIpAddresses_helper(s, end + 1, id + 1, segments, ans);
+            } else {
+                break;
+            }
+        }
     }
 
     // ------------------------------------------------------------------------

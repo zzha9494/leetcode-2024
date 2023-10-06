@@ -1059,7 +1059,7 @@ class Solution:
         return ans
 
     def generateMatrix(self, n: int) -> List[List[int]]:
-        """59"""
+        """Q59"""
         matrix = [[None] * n for _ in range(n)]
         num = 1
         top, right, bottom, left = 0, n-1, n-1, 0
@@ -1290,7 +1290,7 @@ class Solution:
         return False
 
     def sortColors(self, nums: List[int]) -> None:
-        """75"""
+        """Q75"""
         pointer_zero, pointer_two = 0, len(nums) - 1
         i = 0
         while i <= pointer_two:
@@ -1590,7 +1590,7 @@ class Solution:
         return dp[n]
 
     def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
-        """92"""
+        """Q92"""
         dummy = ListNode(0, head)
         pre = dummy
         for _ in range(left-1):
@@ -1604,6 +1604,40 @@ class Solution:
             next.next = pre.next
             pre.next = next
         return dummy.next
+
+    def restoreIpAddresses(self, s: str) -> List[str]:
+        """Q93"""
+        if len(s) > 12 or len(s) < 4:
+            return []
+        ans = []
+        segments = [0] * 4
+
+        def restoreIpAddresses_helper(segId: int, segStart: int):
+            if segId == 4:
+                if segStart == len(s):
+                    ip = ".".join(map(str, segments))
+                    ans.append(ip)
+                return
+
+            if segStart == len(s):
+                return
+
+            if s[segStart] == "0":
+                segments[segId] = 0
+                restoreIpAddresses_helper(segId+1, segStart+1)
+                return
+
+            addr = 0
+            for segEnd in range(segStart, len(s)):
+                addr = addr * 10 + int(s[segEnd])
+                if 0 < addr <= 255:
+                    segments[segId] = addr
+                    restoreIpAddresses_helper(segId+1, segEnd+1)
+                else:
+                    break
+
+        restoreIpAddresses_helper(0, 0)
+        return ans
 
 
 # ----------------------------------------------------
