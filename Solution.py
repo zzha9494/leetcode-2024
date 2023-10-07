@@ -11,6 +11,13 @@ class ListNode:
         self.next = next
 
 
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         """Q1"""
@@ -1638,6 +1645,10 @@ class Solution:
 
         restoreIpAddresses_helper(0, 0)
         return ans
+
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        """Q94"""
+        return self.inorderTraversal(root.left) + [root.val] + self.inorderTraversal(root.right) if root else []
 
 
 # ----------------------------------------------------
