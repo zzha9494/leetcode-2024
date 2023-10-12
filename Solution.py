@@ -1698,6 +1698,17 @@ class Solution:
                     dp[i][j] = dp[i][j-1] and s2[j-1] == s3[p]
         return dp[m][n]
 
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        """Q98"""
+        def isValidBST_helper(node: TreeNode, lower=float("-inf"), upper=float("inf")):
+            return True if not node else all([
+                node.val > lower,
+                node.val < upper,
+                isValidBST_helper(node.left, lower, node.val),
+                isValidBST_helper(node.right, node.val, upper)
+            ])
+        return isValidBST_helper(root)
+
 
 # ----------------------------------------------------
 s = Solution()

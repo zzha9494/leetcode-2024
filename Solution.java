@@ -1891,6 +1891,26 @@ public class Solution {
         return dp[n];
     }
 
+    // Q98
+    public boolean isValidBST(TreeNode root) {
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        double pre = -Double.MAX_VALUE;
+
+        while (root != null || !stack.isEmpty()) {
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            if (root.val <= pre) {
+                return false;
+            }
+            pre = root.val;
+            root = root.right;
+        }
+        return true;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
