@@ -1828,6 +1828,33 @@ public class Solution {
         return ans;
     }
 
+    // Q95
+    public List<TreeNode> generateTrees(int n) {
+        if (n == 0) {
+            return new LinkedList<>();
+        }
+        return this.generateTrees_helper(1, n);
+    }
+
+    List<TreeNode> generateTrees_helper(int start, int end) {
+        List<TreeNode> all = new ArrayList<>();
+        if (start > end) {
+            all.add(null);
+            return all;
+        }
+
+        for (int i = start; i <= end; i++) {
+            List<TreeNode> left = this.generateTrees_helper(start, i - 1);
+            List<TreeNode> right = this.generateTrees_helper(i + 1, end);
+            for (TreeNode l : left) {
+                for (TreeNode r : right) {
+                    all.add(new TreeNode(i, l, r));
+                }
+            }
+        }
+        return all;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
