@@ -1868,6 +1868,29 @@ public class Solution {
         return g[n];
     }
 
+    // Q97
+    public boolean isInterleave(String s1, String s2, String s3) {
+        int m = s1.length(), n = s2.length(), l = s3.length();
+        if (m + n != l) {
+            return false;
+        }
+        boolean[] dp = new boolean[n + 1];
+        dp[0] = true;
+
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                int p = i + j - 1;
+                if (i > 0) {
+                    dp[j] = dp[j] && s1.charAt(i - 1) == s3.charAt(p);
+                }
+                if (j > 0 && dp[j] == false) {
+                    dp[j] = dp[j - 1] && s2.charAt(j - 1) == s3.charAt(p);
+                }
+            }
+        }
+        return dp[n];
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {

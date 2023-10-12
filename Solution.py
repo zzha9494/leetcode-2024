@@ -1679,6 +1679,25 @@ class Solution:
                 g[k] += g[i-1] * g[k-i]
         return g[n]
 
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+        """Q97"""
+        m, n, l = len(s1), len(s2), len(s3)
+        if m + n != l:
+            return False
+
+        # means first i in s1 and fisrt j in s2 can be first (i+j) in s3
+        dp = [[False] * (n+1) for _ in range(m+1)]
+        dp[0][0] = True
+        for i in range(m+1):
+            for j in range(n+1):
+                p = i+j-1
+                if i > 0:
+                    # i-th in s1 == (i+j)-th in s3
+                    dp[i][j] = dp[i-1][j] and s1[i-1] == s3[p]
+                if j > 0 and not dp[i][j]:
+                    dp[i][j] = dp[i][j-1] and s2[j-1] == s3[p]
+        return dp[m][n]
+
 
 # ----------------------------------------------------
 s = Solution()
