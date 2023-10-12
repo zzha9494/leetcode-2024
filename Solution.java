@@ -1855,6 +1855,19 @@ public class Solution {
         return all;
     }
 
+    // Q96
+    public int numTrees(int n) {
+        int[] g = new int[n + 1];
+        g[0] = 1;
+        g[1] = 1;
+        for (int k = 2; k <= n; k++) {
+            for (int i = 1; i <= k; i++) {
+                g[k] += g[i - 1] * g[k - i];
+            }
+        }
+        return g[n];
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {

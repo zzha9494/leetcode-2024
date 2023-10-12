@@ -1668,6 +1668,17 @@ class Solution:
 
         return generateTrees_helper(1, n) if n else []
 
+    def numTrees(self, n: int) -> int:
+        """Q96"""
+        g = [0] * (n+1)
+        g[0], g[1] = 1, 1
+
+        for k in range(2, n+1):
+            # calculate the k-th
+            for i in range(1, k+1):
+                g[k] += g[i-1] * g[k-i]
+        return g[n]
+
 
 # ----------------------------------------------------
 s = Solution()
