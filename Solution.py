@@ -1729,6 +1729,16 @@ class Solution:
 
         x.val, y.val = y.val, x.val
 
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        """Q100"""
+        if not p and not q:
+            return True
+        elif not p or not q:
+            return False
+        elif p.val != q.val:
+            return False
+        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+
 
 # ----------------------------------------------------
 s = Solution()
