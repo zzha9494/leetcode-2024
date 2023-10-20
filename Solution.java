@@ -2021,6 +2021,11 @@ public class Solution {
         return ans;
     }
 
+    // Q104
+    public int maxDepth(TreeNode root) {
+        return root == null ? 0 : (1 + Math.max(this.maxDepth(root.left), this.maxDepth(root.right)));
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {

@@ -1793,6 +1793,10 @@ class Solution:
             leftOrder = not leftOrder
         return ans
 
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        """Q104"""
+        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right)) if root else 0
+
 
 # ----------------------------------------------------
 s = Solution()
@@ -1801,4 +1805,4 @@ node7 = TreeNode(7)
 node20 = TreeNode(20, node15, node7)
 node9 = TreeNode(9)
 node3 = TreeNode(3, node9, node20)
-print(s.zigzagLevelOrder(node3))
+print(s.maxDepth(node3))
