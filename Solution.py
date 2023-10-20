@@ -1739,6 +1739,19 @@ class Solution:
             return False
         return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
 
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        """Q101"""
+        def isSymmetric_helper(p: TreeNode, q: TreeNode):
+            if not p and not q:
+                return True
+            elif not p or not q:
+                return False
+            elif p.val != q.val:
+                return False
+            return isSymmetric_helper(p.left, q.right) and isSymmetric_helper(p.right, q.left)
+
+        return isSymmetric_helper(root.left, root.right)
+
 
 # ----------------------------------------------------
 s = Solution()

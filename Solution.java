@@ -1949,6 +1949,20 @@ public class Solution {
         return this.isSameTree(p.left, q.left) && this.isSameTree(p.right, q.right);
     }
 
+    // Q101
+    public boolean isSymmetric(TreeNode root) {
+        return this.isSymmetric_helper(root.left, root.right);
+    }
+
+    boolean isSymmetric_helper(TreeNode p, TreeNode q) {
+        if (p == null && q == null) {
+            return true;
+        } else if (p == null || q == null || p.val != q.val) {
+            return false;
+        }
+        return this.isSymmetric_helper(p.left, q.right) && this.isSymmetric_helper(p.right, q.left);
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
