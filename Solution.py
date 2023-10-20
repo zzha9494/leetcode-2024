@@ -1752,7 +1752,25 @@ class Solution:
 
         return isSymmetric_helper(root.left, root.right)
 
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        """Q102"""
+        if not root:
+            return []
+        ans = []
+        current = [root]
+        next = []
+        while current:
+            for e in current:
+                if e.left:
+                    next.append(e.left)
+                if e.right:
+                    next.append(e.right)
+            ans.append([e.val for e in current])
+            current = next
+            next = []
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
-print(s.generateTrees(1))
+print(s)

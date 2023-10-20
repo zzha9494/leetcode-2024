@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Queue;
 // import java.util.Set;
 import java.util.StringJoiner;
 
@@ -1961,6 +1962,32 @@ public class Solution {
             return false;
         }
         return this.isSymmetric_helper(p.left, q.right) && this.isSymmetric_helper(p.right, q.left);
+    }
+
+    // Q102
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        if (root == null) {
+            return ans;
+        }
+        Queue<TreeNode> current = new LinkedList<>();
+        current.add(root);
+        while (!current.isEmpty()) {
+            int n = current.size();
+            List<Integer> temp = new ArrayList<>();
+            for (int i = 0; i < n; i++) {
+                TreeNode t = current.remove();
+                temp.add(t.val);
+                if (t.left != null) {
+                    current.add(t.left);
+                }
+                if (t.right != null) {
+                    current.add(t.right);
+                }
+            }
+            ans.add(temp);
+        }
+        return ans;
     }
 
     // ------------------------------------------------------------------------
