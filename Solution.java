@@ -1911,6 +1911,34 @@ public class Solution {
         return true;
     }
 
+    // Q99
+    public void recoverTree(TreeNode root) {
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode x = null, y = null, pre = new TreeNode(Integer.MIN_VALUE);
+
+        while (root != null || !stack.isEmpty()) {
+            while (root != null) {
+                stack.addFirst(root);
+                root = root.left;
+            }
+            root = stack.removeFirst();
+            if (pre.val > root.val) {
+                y = root;
+                if (x == null) {
+                    x = pre;
+                } else {
+                    break;
+                }
+            }
+            pre = root;
+            root = root.right;
+        }
+
+        int temp = x.val;
+        x.val = y.val;
+        y.val = temp;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {

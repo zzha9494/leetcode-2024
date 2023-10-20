@@ -1709,6 +1709,26 @@ class Solution:
             ])
         return isValidBST_helper(root)
 
+    def recoverTree(self, root: Optional[TreeNode]) -> None:
+        """Q99"""
+        x, y, pre = None, None, TreeNode(float("-inf"))
+        stack = []
+        while root or stack:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            if pre.val > root.val:
+                y = root
+                if not x:
+                    x = pre
+                else:
+                    break
+            pre = root
+            root = root.right
+
+        x.val, y.val = y.val, x.val
+
 
 # ----------------------------------------------------
 s = Solution()
