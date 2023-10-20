@@ -1770,7 +1770,35 @@ class Solution:
             next = []
         return ans
 
+    def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        """Q103"""
+        if not root:
+            return []
+        ans = []
+        q = [root]
+        leftOrder = True
+        while q:
+            n = len(q)
+            temp = []
+            for _ in range(n):
+                current = q.pop(0)
+                temp.append(current.val)
+                if current.left:
+                    q.append(current.left)
+                if current.right:
+                    q.append(current.right)
+            if not leftOrder:
+                temp.reverse()
+            ans.append(temp)
+            leftOrder = not leftOrder
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
-print(s)
+node15 = TreeNode(15)
+node7 = TreeNode(7)
+node20 = TreeNode(20, node15, node7)
+node9 = TreeNode(9)
+node3 = TreeNode(3, node9, node20)
+print(s.zigzagLevelOrder(node3))

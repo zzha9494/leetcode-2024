@@ -1990,6 +1990,37 @@ public class Solution {
         return ans;
     }
 
+    // Q103
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        if (root == null) {
+            return ans;
+        }
+        boolean leftOrder = true;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while (!q.isEmpty()) {
+            int n = q.size();
+            List<Integer> temp = new ArrayList<>();
+            for (int i = 0; i < n; i++) {
+                TreeNode current = q.remove();
+                temp.add(current.val);
+                if (current.left != null) {
+                    q.add(current.left);
+                }
+                if (current.right != null) {
+                    q.add(current.right);
+                }
+            }
+            if (!leftOrder) {
+                Collections.reverse(temp);
+            }
+            leftOrder = !leftOrder;
+            ans.add(temp);
+        }
+        return ans;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
