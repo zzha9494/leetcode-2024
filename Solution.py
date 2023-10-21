@@ -1797,6 +1797,27 @@ class Solution:
         """Q104"""
         return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right)) if root else 0
 
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        """Q105"""
+        def buildTree_helper(pre_left, pre_right, in_left, in_right):
+            if pre_left > pre_right:
+                # empty sub tree
+                return None
+            pre_root = pre_left
+            in_root = index[preorder[pre_root]]
+
+            root = TreeNode(preorder[pre_root])
+            size_left = in_root - in_left
+            root.left = buildTree_helper(
+                pre_left + 1, pre_left + size_left, in_left, in_root - 1)
+            root.right = buildTree_helper(
+                pre_left + size_left + 1, pre_right, in_root + 1, in_right)
+            return root
+
+        index = {e: i for i, e in enumerate(inorder)}
+        n = len(preorder)
+        return buildTree_helper(0, n-1, 0, n-1)
+
 
 # ----------------------------------------------------
 s = Solution()

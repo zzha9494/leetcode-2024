@@ -2026,6 +2026,34 @@ public class Solution {
         return root == null ? 0 : (1 + Math.max(this.maxDepth(root.left), this.maxDepth(root.right)));
     }
 
+    // Q105
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        int n = preorder.length;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            map.put(inorder[i], i);
+        }
+        return this.buildTree_helper(0, n - 1, 0, n - 1, preorder, inorder, map);
+    }
+
+    TreeNode buildTree_helper(int pre_left, int pre_right, int in_left, int in_right, int[] preorder, int[] inorder,
+            Map<Integer, Integer> map) {
+        if (pre_left > pre_right) {
+            return null;
+        }
+
+        int pre_root = pre_left;
+        int in_root = map.get(preorder[pre_root]);
+
+        TreeNode root = new TreeNode(preorder[pre_root]);
+        int size_left = in_root - in_left;
+        root.left = this.buildTree_helper(pre_left + 1, pre_left + size_left, in_left, in_root - 1, preorder, inorder,
+                map);
+        root.right = this.buildTree_helper(pre_left + size_left + 1, pre_right, in_root + 1, in_right, preorder,
+                inorder, map);
+        return root;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
