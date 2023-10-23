@@ -1818,6 +1818,27 @@ class Solution:
         n = len(preorder)
         return buildTree_helper(0, n-1, 0, n-1)
 
+    def buildTree(self, inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
+        """Q106"""
+        def buildTree_helper(in_left, in_right, post_left, post_right):
+            if post_left > post_right:
+                return None
+
+            post_root = post_right
+            in_root = index[postorder[post_root]]
+            size_left = in_root - in_left
+
+            root = TreeNode(postorder[post_root])
+            root.left = buildTree_helper(
+                in_left, in_root-1, post_left, post_left+size_left-1)
+            root.right = buildTree_helper(
+                in_root+1, in_right, post_left+size_left, post_right-1)
+            return root
+
+        index = {e: i for i, e in enumerate(inorder)}
+        n = len(inorder)
+        return buildTree_helper(0, n-1, 0, n-1)
+
 
 # ----------------------------------------------------
 s = Solution()

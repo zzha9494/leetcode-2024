@@ -766,20 +766,20 @@ public class Solution {
     }
 
     // Q40
-    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+    public List<List<Integer>> combinationSum1(int[] candidates, int target) {
         Arrays.sort(candidates);
         List<List<Integer>> ans = new ArrayList<>();
-        this.combinationSum2_helper(candidates, target, new LinkedList<>(), ans);
+        this.combinationSum1_helper(candidates, target, new LinkedList<>(), ans);
         return ans;
     }
 
-    void combinationSum2_helper(int[] candidates, int target, Deque<Integer> path, List<List<Integer>> ans) {
+    void combinationSum1_helper(int[] candidates, int target, Deque<Integer> path, List<List<Integer>> ans) {
         for (int i = 0; i < candidates.length; i++) {
             if (i > 0 && candidates[i] == candidates[i - 1])
                 continue;
             if (candidates[i] < target) {
                 path.addFirst(candidates[i]);
-                this.combinationSum2_helper(Arrays.copyOfRange(candidates, i + 1, candidates.length),
+                this.combinationSum1_helper(Arrays.copyOfRange(candidates, i + 1, candidates.length),
                         target - candidates[i], path,
                         ans);
                 path.removeFirst();
@@ -1534,7 +1534,7 @@ public class Solution {
     }
 
     // Q80
-    public int removeDuplicates2(int[] nums) {
+    public int removeDuplicates1(int[] nums) {
         int n = nums.length;
         if (n <= 2) {
             return n;
@@ -2054,13 +2054,39 @@ public class Solution {
         return root;
     }
 
+    // Q106
+    public TreeNode buildTree1(int[] inorder, int[] postorder) {
+        int n = inorder.length;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            map.put(inorder[i], i);
+        }
+        return this.buildTree1_helper(0, n - 1, 0, n - 1, inorder, postorder, map);
+    }
+
+    TreeNode buildTree1_helper(int in_left, int in_right, int post_left, int post_right, int[] inorder,
+            int[] postorder, Map<Integer, Integer> map) {
+        if (post_left > post_right) {
+            return null;
+        }
+        int post_root = post_right;
+        int in_root = map.get(postorder[post_root]);
+        int size_left = in_root - in_left;
+        TreeNode root = new TreeNode(postorder[post_root]);
+        root.left = this.buildTree1_helper(in_left, in_root - 1, post_left, post_left + size_left - 1, inorder,
+                postorder, map);
+        root.right = this.buildTree1_helper(in_root + 1, in_right, post_left + size_left, post_right - 1, inorder,
+                postorder, map);
+        return root;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
         Solution s = new Solution();
         int[] nums = { 1, 1, 3, 3, 4 };
 
-        System.out.println(s.removeDuplicates2(nums));
+        System.out.println();
 
     }
 }
