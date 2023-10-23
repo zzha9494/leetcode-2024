@@ -2080,6 +2080,33 @@ public class Solution {
         return root;
     }
 
+    // Q107
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        if (root == null) {
+            return ans;
+        }
+
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while (!q.isEmpty()) {
+            int n = q.size();
+            List<Integer> temp = new ArrayList<>();
+            for (int i = 0; i < n; i++) {
+                TreeNode current = q.remove();
+                temp.add(current.val);
+                if (current.left != null) {
+                    q.add(current.left);
+                }
+                if (current.right != null) {
+                    q.add(current.right);
+                }
+            }
+            ans.add(0, temp);
+        }
+        return ans;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {

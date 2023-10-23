@@ -1839,6 +1839,26 @@ class Solution:
         n = len(inorder)
         return buildTree_helper(0, n-1, 0, n-1)
 
+    def levelOrderBottom(self, root: Optional[TreeNode]) -> List[List[int]]:
+        """Q107"""
+        if not root:
+            return []
+        ans = []
+        q = [root]
+
+        while q:
+            n = len(q)
+            temp = []
+            for _ in range(n):
+                current = q.pop(0)
+                temp.append(current.val)
+                if current.left:
+                    q.append(current.left)
+                if current.right:
+                    q.append(current.right)
+            ans.insert(0, temp)
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
@@ -1847,4 +1867,4 @@ node7 = TreeNode(7)
 node20 = TreeNode(20, node15, node7)
 node9 = TreeNode(9)
 node3 = TreeNode(3, node9, node20)
-print(s.maxDepth(node3))
+print(s.levelOrderBottom(node3))
