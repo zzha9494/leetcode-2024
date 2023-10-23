@@ -2107,6 +2107,22 @@ public class Solution {
         return ans;
     }
 
+    // Q108
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return this.sortedArrayToBST_helper(0, nums.length - 1, nums);
+    }
+
+    TreeNode sortedArrayToBST_helper(int left, int right, int[] nums) {
+        if (left > right) {
+            return null;
+        }
+        int mid = (left + right) / 2;
+        TreeNode root = new TreeNode(nums[mid]);
+        root.left = this.sortedArrayToBST_helper(left, mid - 1, nums);
+        root.right = this.sortedArrayToBST_helper(mid + 1, right, nums);
+        return root;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
