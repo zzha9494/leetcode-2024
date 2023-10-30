@@ -2123,6 +2123,27 @@ public class Solution {
         return root;
     }
 
+    // Q109
+    public TreeNode sortedListToBST(ListNode head) {
+        return this.sortedListToBST_helper(head, null);
+    }
+
+    TreeNode sortedListToBST_helper(ListNode head, ListNode tail) {
+        if (head == tail) {
+            return null;
+        }
+
+        ListNode slow = head, fast = head;
+        while (fast != tail && fast.next != tail) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        TreeNode root = new TreeNode(slow.val);
+        root.left = this.sortedListToBST_helper(head, slow);
+        root.right = this.sortedListToBST_helper(slow.next, tail);
+        return root;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {

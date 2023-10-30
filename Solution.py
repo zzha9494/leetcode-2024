@@ -1872,6 +1872,28 @@ class Solution:
         root.right = self.sortedArrayToBST(nums[mid+1:])
         return root
 
+    def sortedListToBST(self, head: Optional[ListNode]) -> Optional[TreeNode]:
+        """Q109"""
+        def get_length(head):
+            res = 0
+            while head:
+                res += 1
+                head = head.next
+            return res
+
+        def sortedListToBST_helper(left, right):
+            if left > right:
+                return None
+            mid = (left + right) // 2
+            root = TreeNode()
+            root.left = sortedListToBST_helper(left, mid - 1)
+            nonlocal head
+            root.val = head.val
+            head = head.next
+            root.right = sortedListToBST_helper(mid + 1, right)
+            return root
+        return sortedListToBST_helper(0, get_length(head)-1)
+
 
 # ----------------------------------------------------
 s = Solution()
