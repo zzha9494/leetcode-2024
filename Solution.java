@@ -2144,6 +2144,23 @@ public class Solution {
         return root;
     }
 
+    // Q110
+    public boolean isBalanced(TreeNode root) {
+        return this.isBalanced_helper(root) != -1;
+    }
+
+    int isBalanced_helper(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int left, right;
+        if ((left = this.isBalanced_helper(root.left)) == -1 || (right = this.isBalanced_helper(root.right)) == -1
+                || (Math.abs(left - right) > 1)) {
+            return -1;
+        }
+        return 1 + Math.max(left, right);
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {

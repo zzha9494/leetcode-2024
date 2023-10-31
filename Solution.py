@@ -1894,6 +1894,18 @@ class Solution:
             return root
         return sortedListToBST_helper(0, get_length(head)-1)
 
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        """Q110"""
+        def isBalanced_helper(root: TreeNode) -> int:
+            if not root:
+                return 0
+            left = isBalanced_helper(root.left)
+            right = isBalanced_helper(root.right)
+            if left == -1 or right == -1 or abs(left-right) > 1:
+                return -1
+            return 1 + max(left, right)
+        return isBalanced_helper(root) != -1
+
 
 # ----------------------------------------------------
 s = Solution()
