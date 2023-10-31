@@ -1932,6 +1932,29 @@ class Solution:
             if node.right:
                 q.append((node.right, depth+1))
 
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        """Q112"""
+        if not root:
+            return False
+        if not root.left and not root.right:
+            return root.val == targetSum
+        return self.hasPathSum(root.left, targetSum-root.val) or self.hasPathSum(root.right, targetSum-root.val)
+
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        """Q112 alternative"""
+        if not root:
+            return False
+        q = [(root, root.val)]
+        while q:
+            node, path_sum = q.pop(0)
+            if not node.left and not node.right and path_sum == targetSum:
+                return True
+            if node.left:
+                q.append((node.left, path_sum+node.left.val))
+            if node.right:
+                q.append((node.right, path_sum+node.right.val))
+        return False
+
 
 # ----------------------------------------------------
 s = Solution()
