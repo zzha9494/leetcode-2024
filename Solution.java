@@ -2161,6 +2161,19 @@ public class Solution {
         return 1 + Math.max(left, right);
     }
 
+    // Q111
+    public int minDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int left = this.minDepth(root.left);
+        int right = this.minDepth(root.right);
+        if (left == 0 || right == 0) {
+            return 1 + Math.max(left, right);
+        }
+        return 1 + Math.min(left, right);
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {

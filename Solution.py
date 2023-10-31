@@ -1906,6 +1906,32 @@ class Solution:
             return 1 + max(left, right)
         return isBalanced_helper(root) != -1
 
+    def minDepth(self, root: Optional[TreeNode]) -> int:
+        """Q111"""
+        if not root:
+            return 0
+        left = self.minDepth(root.left)
+        right = self.minDepth(root.right)
+        if left == 0 or right == 0:
+            return 1 + max(left, right)
+        return 1 + min(left, right)
+
+    def minDepth(self, root: Optional[TreeNode]) -> int:
+        """Q111 alternative"""
+        if not root:
+            return 0
+
+        # q = collections.deque() # thread-safe
+        q = [(root, 1)]
+        while q:
+            node, depth = q.pop(0)
+            if not node.left and not node.right:
+                return depth
+            if node.left:
+                q.append((node.left, depth+1))
+            if node.right:
+                q.append((node.right, depth+1))
+
 
 # ----------------------------------------------------
 s = Solution()
