@@ -2185,6 +2185,27 @@ public class Solution {
         return this.hasPathSum(root.left, targetSum - root.val) || this.hasPathSum(root.right, targetSum - root.val);
     }
 
+    // Q113
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        List<List<Integer>> ans = new ArrayList<>();
+        this.pathSum_helper(root, new LinkedList<>(), targetSum, ans);
+        return ans;
+    }
+
+    void pathSum_helper(TreeNode root, Deque<Integer> path, int need, List<List<Integer>> ans) {
+        if (root == null) {
+            return;
+        }
+        path.addLast(root.val);
+        need -= root.val;
+        if (root.left == null && root.right == null && need == 0) {
+            ans.add(new LinkedList<>(path));
+        }
+        this.pathSum_helper(root.left, path, need, ans);
+        this.pathSum_helper(root.right, path, need, ans);
+        path.removeLast();
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {

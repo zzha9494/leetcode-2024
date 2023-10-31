@@ -1955,6 +1955,22 @@ class Solution:
                 q.append((node.right, path_sum+node.right.val))
         return False
 
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
+        """Q113"""
+        def pathSum_helper(root: TreeNode, path: list, need: int):
+            if not root:
+                return
+            path.append(root.val)
+            if not root.left and not root.right and root.val == need:
+                ans.append(path.copy())
+            pathSum_helper(root.left, path, need - root.val)
+            pathSum_helper(root.right, path, need - root.val)
+            path.pop()
+
+        ans = []
+        pathSum_helper(root, [], targetSum)
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
