@@ -2223,6 +2223,31 @@ public class Solution {
         }
     }
 
+    // Q115
+    public int numDistinct(String s, String t) {
+        int m = s.length(), n = t.length();
+        if (m < n) {
+            return 0;
+        }
+
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+
+        // (pre) - (nextPre)
+        // ........ (dp[j])
+        for (int i = 1; i < m + 1; i++) {
+            int pre = dp[0];
+            for (int j = 1; j < n + 1; j++) {
+                int nextPre = dp[j];
+                if (s.charAt(i - 1) == t.charAt(j - 1)) {
+                    dp[j] += pre;
+                }
+                pre = nextPre;
+            }
+        }
+        return dp[n];
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {

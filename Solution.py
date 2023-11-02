@@ -1984,6 +1984,32 @@ class Solution:
                 current.left = None
             current = current.right
 
+    def numDistinct(self, s: str, t: str) -> int:
+        """Q115"""
+        m, n = len(s), len(t)
+        if m < n:
+            return 0
+        # dp[i][j]表示s[:i-1]子序列中t[:j-1]的数量
+        dp = [[0] * (n+1) for _ in range(m+1)]
+
+        # s=""
+        for j in range(n+1):
+            dp[0][j] = 0
+        # t=""
+        for i in range(m+1):
+            dp[i][0] = 1
+
+        for i in range(1, m+1):
+            for j in range(1, n+1):
+                # 如s=[r,a,b], t=[r,a], 当不匹配时, s=[r,a,b]中有[r,a]的组合数和s=[r,a]的组合数一样
+                # 那么dp[3][2] = dp[2][2], 即dp[i][j] = dp[i-1][j]
+                if s[i-1] != t[j-1]:
+                    dp[i][j] = dp[i-1][j]
+                else:
+                    # 使用匹配+不使用匹配
+                    dp[i][j] = dp[i-1][j-1] + dp[i-1][j]
+        return dp[-1][-1]
+
 
 # ----------------------------------------------------
 s = Solution()
