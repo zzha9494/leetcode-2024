@@ -1971,6 +1971,19 @@ class Solution:
         pathSum_helper(root, [], targetSum)
         return ans
 
+    def flatten(self, root: Optional[TreeNode]) -> None:
+        """Q114"""
+        current = root
+        while current:
+            if current.left:
+                pre = current.left
+                while pre.right:
+                    pre = pre.right
+                pre.right = current.right
+                current.right = current.left
+                current.left = None
+            current = current.right
+
 
 # ----------------------------------------------------
 s = Solution()
