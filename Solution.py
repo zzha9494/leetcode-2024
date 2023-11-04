@@ -6,16 +6,24 @@ from typing import List, Optional
 
 
 class ListNode:
-    def __init__(self, val=0, next=None):
+    def __init__(self, val=0, next: 'ListNode' = None):
         self.val = val
         self.next = next
 
 
 class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
+    def __init__(self, val=0, left: 'TreeNode' = None, right: 'TreeNode' = None):
         self.val = val
         self.left = left
         self.right = right
+
+
+class Node:
+    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
 
 
 class Solution:
@@ -2009,6 +2017,18 @@ class Solution:
                     # 使用匹配+不使用匹配
                     dp[i][j] = dp[i-1][j-1] + dp[i-1][j]
         return dp[-1][-1]
+
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        """Q116"""
+        if not root:
+            return root
+        if root.left:
+            root.left.next = root.right
+            if root.next:
+                root.right.next = root.next.left
+        self.connect(root.left)
+        self.connect(root.right)
+        return root
 
 
 # ----------------------------------------------------
