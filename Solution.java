@@ -2290,6 +2290,42 @@ public class Solution {
         return root;
     }
 
+    // Q117
+    public Node connect1(Node root) {
+        if (root == null) {
+            return null;
+        }
+
+        Node start = root;
+        while (start != null) {
+            Node last = null;
+            Node nextStart = null;
+            for (Node p = start; p != null; p = p.next) {
+                if (p.left != null) {
+                    if (last != null) {
+                        last.next = p.left;
+                    }
+                    if (nextStart == null) {
+                        nextStart = p.left;
+                    }
+                    last = p.left;
+                }
+
+                if (p.right != null) {
+                    if (last != null) {
+                        last.next = p.right;
+                    }
+                    if (nextStart == null) {
+                        nextStart = p.right;
+                    }
+                    last = p.right;
+                }
+            }
+            start = nextStart;
+        }
+        return root;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {

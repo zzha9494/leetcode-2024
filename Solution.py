@@ -2030,6 +2030,30 @@ class Solution:
         self.connect(root.right)
         return root
 
+    def connect(self, root: 'Node') -> 'Node':
+        """Q117"""
+        if not root:
+            return root
+
+        if root.left and root.right:
+            root.left.next = root.right
+
+        pre = root.right if root.right else root.left
+
+        if pre:
+            head = root.next
+            while head:
+                if head.left or head.right:
+                    pre.next = head.left if head.left else head.right
+                    break
+                head = head.next
+
+        # right first in case the link is not fully connected
+        # [1,2,3,4,5,6,7,null, null, null,1,null,null, 1]
+        self.connect(root.right)
+        self.connect(root.left)
+        return root
+
 
 # ----------------------------------------------------
 s = Solution()
