@@ -2054,12 +2054,17 @@ class Solution:
         self.connect(root.left)
         return root
 
+    def generate(self, numRows: int) -> List[List[int]]:
+        """Q118"""
+        ans = [[1]]
+        for i in range(2, numRows+1):
+            current = [0] + ans[-1]
+            for j in range(i-1):
+                current[j] += current[j+1]
+            ans.append(current)
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
-node15 = TreeNode(15)
-node7 = TreeNode(7)
-node20 = TreeNode(20, node15, node7)
-node9 = TreeNode(9)
-node3 = TreeNode(3, node9, node20)
-print(s.levelOrderBottom(node3))
+print(s.generate(6))
