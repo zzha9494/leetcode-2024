@@ -2064,7 +2064,15 @@ class Solution:
             ans.append(current)
         return ans
 
+    def getRow(self, rowIndex: int) -> List[int]:
+        """Q119"""
+        ans = [0] * rowIndex + [1]
+        for i in range(1, rowIndex+1):
+            for j in range(rowIndex-i, rowIndex):
+                ans[j] += ans[j+1]
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
-print(s.generate(6))
+print(s.getRow(4))

@@ -2343,6 +2343,22 @@ public class Solution {
         return ans;
     }
 
+    // Q119
+    public List<Integer> getRow(int rowIndex) {
+        List<Integer> ans = new ArrayList<>();
+        for (int i = 0; i < rowIndex; i++) {
+            ans.add(0);
+        }
+        ans.add(1);
+
+        for (int i = 1; i < rowIndex + 1; i++) {
+            for (int j = rowIndex - i; j < rowIndex; j++) {
+                ans.set(j, ans.get(j) + ans.get(j + 1));
+            }
+        }
+        return ans;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
