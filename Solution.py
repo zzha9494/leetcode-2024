@@ -2072,7 +2072,23 @@ class Solution:
                 ans[j] += ans[j+1]
         return ans
 
+    def minimumTotal(self, triangle: List[List[int]]) -> int:
+        """Q120"""
+        n = len(triangle)
+        ans = [0] * n
+        for i in range(n):
+            temp = ans.copy()
+            for j in range(i+1):
+                if j == 0:
+                    ans[j] += triangle[i][j]
+                elif j == i:
+                    ans[j] = triangle[i][j] + temp[j-1]
+                else:
+                    ans[j] = triangle[i][j] + min(temp[j-1], temp[j])
+        return min(ans)
+
 
 # ----------------------------------------------------
 s = Solution()
-print(s.getRow(4))
+a = triangle = [[2], [3, 4], [6, 5, 7], [4, 1, 8, 3]]
+print(s.minimumTotal(a))
