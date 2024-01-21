@@ -2086,7 +2086,14 @@ class Solution:
                 else:
                     ans[j] = triangle[i][j] + min(temp[j-1], temp[j])
         return min(ans)
-
+    
+    def maxProfit(self, prices: List[int]) -> int:
+        """Q121"""
+        cost, profit = float("inf"), 0
+        for price in prices:
+            cost = min(cost, price)
+            profit = max(profit, price - cost)
+        return profit
 
 # ----------------------------------------------------
 s = Solution()
