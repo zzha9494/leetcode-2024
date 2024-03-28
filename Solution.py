@@ -2086,7 +2086,7 @@ class Solution:
                 else:
                     ans[j] = triangle[i][j] + min(temp[j-1], temp[j])
         return min(ans)
-    
+
     def maxProfit(self, prices: List[int]) -> int:
         """Q121"""
         cost, profit = float("inf"), 0
@@ -2095,7 +2095,18 @@ class Solution:
             profit = max(profit, price - cost)
         return profit
 
+    def maxProfit(self, prices: List[int]) -> int:
+        """Q122"""
+        current, profit = float("inf"), 0
+        for price in prices:
+            # if price > current:
+            #     profit += price - current
+            profit += max(0, price - current)
+            current = price
+        return profit
+
+
 # ----------------------------------------------------
 s = Solution()
-a = triangle = [[2], [3, 4], [6, 5, 7], [4, 1, 8, 3]]
-print(s.minimumTotal(a))
+a = [7, 1, 5, 3, 6, 4]
+print(s.maxProfit1(a))

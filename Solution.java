@@ -2391,6 +2391,16 @@ public class Solution {
         return profit;
     }
 
+    // Q122
+    public int maxProfit1(int[] prices) {
+        int current = Integer.MAX_VALUE, profit = 0;
+        for (int price : prices) {
+            profit += Math.max(0, price - current);
+            current = price;
+        }
+        return profit;
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
