@@ -2105,6 +2105,24 @@ class Solution:
             current = price
         return profit
 
+    def maxPathSum(self, root: Optional[TreeNode]) -> int:
+        """Q124"""
+        def maxGain(node: Optional[TreeNode]) -> int:
+            # Get maximum of a path starting from node.
+            if not node:
+                return 0
+            leftGain = max(0, maxGain(node.left))
+            rightGain = max(0, maxGain(node.right))
+
+            nonlocal current_max
+            current_max = max(current_max, node.val + leftGain + rightGain)
+
+            return node.val + max(leftGain, rightGain)
+
+        current_max = float("-inf")
+        maxGain(root)
+        return current_max
+
 
 # ----------------------------------------------------
 s = Solution()

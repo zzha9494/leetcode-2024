@@ -2401,6 +2401,25 @@ public class Solution {
         return profit;
     }
 
+    // Q124
+    public int maxPathSum(TreeNode root) {
+        int[] current = { Integer.MIN_VALUE };
+        maxPathSum_helper(root, current);
+        return current[0];
+    }
+
+    int maxPathSum_helper(TreeNode node, int[] current) {
+        if (node == null) {
+            return 0;
+        }
+        int leftGain = Math.max(0, maxPathSum_helper(node.left, current));
+        int rightGain = Math.max(0, maxPathSum_helper(node.right, current));
+
+        current[0] = Math.max(current[0], node.val + leftGain + rightGain);
+
+        return node.val + Math.max(leftGain, rightGain);
+    }
+
     // ------------------------------------------------------------------------
 
     public static void main(String[] args) {
