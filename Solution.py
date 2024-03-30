@@ -2153,8 +2153,52 @@ class Solution:
             ans = max(ans, count)
         return ans
 
+    def sumNumbers(self, root: Optional[TreeNode]) -> int:
+        """Q129"""
+        current = ''
+        ans = 0
+
+        def sumNumbers_helper(node: Optional[TreeNode]) -> None:
+            nonlocal current
+            nonlocal ans
+
+            if not node:
+                return
+
+            current += str(node.val)
+            if node.left or node.right:
+                if node.left:
+                    sumNumbers_helper(node.left)
+                if node.right:
+                    sumNumbers_helper(node.right)
+            else:
+                ans += int(current)
+            current = current[:-1]
+
+        sumNumbers_helper(root)
+        return ans
+
+    def sumNumbers(self, root: Optional[TreeNode]) -> int:
+        """Q129 alternative"""
+        def sumNumbers_helper(node: Optional[TreeNode], preTotal: int) -> int:
+            if not node:
+                return 0
+
+            total = preTotal * 10 + node.val
+            if not node.left and not node.right:
+                return total
+
+            return sumNumbers_helper(node.left, total) + sumNumbers_helper(node.right, total)
+
+        return sumNumbers_helper(root, 0)
+
 
 # ----------------------------------------------------
 s = Solution()
-a = [7, 1, 5, 3, 6, 4]
-print(s.maxProfit1(a))
+node1 = TreeNode(1)
+node3 = TreeNode(3)
+
+root = TreeNode(2)
+root.left = node1
+root.right = node3
+print(s.sumNumbers(root))
