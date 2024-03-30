@@ -2123,6 +2123,36 @@ class Solution:
         maxGain(root)
         return current_max
 
+    def isPalindrome(self, s: str) -> bool:
+        """Q125"""
+        left, right = 0, len(s) - 1
+        while left < right:
+            while left < right and not s[left].isalnum():
+                left += 1
+            while left < right and not s[right].isalnum():
+                right -= 1
+            if left < right and s[left].lower() != s[right].lower():
+                return False
+            left += 1
+            right -= 1
+        return True
+
+    def longestConsecutive(self, nums: List[int]) -> int:
+        """Q128"""
+        n = len(nums)
+        ans = 0
+        num_set = set(nums)
+
+        for i in num_set:
+            if i-1 in num_set:
+                continue
+
+            count = 1
+            while i + count in num_set:
+                count += 1
+            ans = max(ans, count)
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
