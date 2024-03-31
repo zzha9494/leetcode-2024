@@ -2220,11 +2220,32 @@ class Solution:
         # board = [['O' if cell == 'A' else 'X' if cell ==
         #           'O' else cell for cell in row] for row in board]
 
+    def partition(self, s: str) -> List[List[str]]:
+        """Q131"""
+        n = len(s)
+        f = [[True] * n for _ in range(n)]
+
+        for i in range(n-1, -1, -1):
+            for j in range(i+1, n):
+                f[i][j] = (s[i] == s[j]) and f[i+1][j-1]
+
+        ans = []
+        current = []
+
+        def partition_helper(i: int) -> None:
+            if i == n:
+                ans.append(current.copy())
+            for j in range(i, n):
+                if f[i][j]:
+                    current.append(s[i:j+1])
+                    partition_helper(j+1)
+                    current.pop()
+
+        partition_helper(0)
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
-board = [["X", "O", "X", "O", "X", "O"],
-         ["O", "X", "O", "X", "O", "X"],
-         ["X", "O", "X", "O", "X", "O"],
-         ["O", "X", "O", "X", "O", "X"]]
-print(s.solve(board))
+a = "aab"
+print(s.partition(a))
