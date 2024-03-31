@@ -2244,8 +2244,34 @@ class Solution:
         partition_helper(0)
         return ans
 
+    def minCut(self, s: str) -> int:
+        """Q132"""
+        if s == s[::-1]:
+            return 0
+        for i in range(1, len(s)):
+            if s[:i] == s[:i][::-1] and s[i:] == s[i:][::-1]:
+                return 1
+
+        n = len(s)
+        f = [[True] * n for i in range(n)]
+
+        for i in range(n-1, -1, -1):
+            for j in range(i+1, n):
+                f[i][j] = (s[i] == s[j]) and f[i+1][j-1]
+
+        dp = [float("inf") for i in range(n)]
+        # "abbab"
+        for i in range(n):
+            if f[0][i]:
+                dp[i] = 0
+            else:
+                for j in range(i):
+                    if f[j+1][i]:
+                        dp[i] = min(dp[i], dp[j] + 1)
+        return dp[-1]
+
 
 # ----------------------------------------------------
 s = Solution()
-a = "aab"
-print(s.partition(a))
+a = "abbab"
+print(s.minCut(a))
