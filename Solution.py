@@ -2192,13 +2192,39 @@ class Solution:
 
         return sumNumbers_helper(root, 0)
 
+    def solve(self, board: List[List[str]]) -> None:
+        """Q130"""
+        m, n = len(board), len(board[0])
+
+        def solve_helper(i: int, j: int) -> None:
+            if 0 <= i < m and 0 <= j < n and board[i][j] == 'O':
+                board[i][j] = 'A'  # Restore 'A' to 'O' later
+                solve_helper(i-1, j)
+                solve_helper(i+1, j)
+                solve_helper(i, j-1)
+                solve_helper(i, j+1)
+
+        for i in range(m):
+            solve_helper(i, 0)
+            solve_helper(i, n-1)
+        for j in range(1, n-1):
+            solve_helper(0, j)
+            solve_helper(m-1, j)
+
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == 'A':
+                    board[i][j] = 'O'
+                elif board[i][j] == 'O':
+                    board[i][j] = 'X'
+        # board = [['O' if cell == 'A' else 'X' if cell ==
+        #           'O' else cell for cell in row] for row in board]
+
 
 # ----------------------------------------------------
 s = Solution()
-node1 = TreeNode(1)
-node3 = TreeNode(3)
-
-root = TreeNode(2)
-root.left = node1
-root.right = node3
-print(s.sumNumbers(root))
+board = [["X", "O", "X", "O", "X", "O"],
+         ["O", "X", "O", "X", "O", "X"],
+         ["X", "O", "X", "O", "X", "O"],
+         ["O", "X", "O", "X", "O", "X"]]
+print(s.solve(board))
