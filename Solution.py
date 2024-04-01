@@ -19,11 +19,12 @@ class TreeNode:
 
 
 class Node:
-    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None):
+    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None, neighbors: list['Node'] = None):
         self.val = val
         self.left = left
         self.right = right
         self.next = next
+        self.neighbors = neighbors if neighbors is not None else []
 
 
 class Solution:
@@ -2270,8 +2271,35 @@ class Solution:
                         dp[i] = min(dp[i], dp[j] + 1)
         return dp[-1]
 
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        """Q133"""
+        # key: original; value: new
+        visited = dict()
+
+        def cloneGraph_helper(node: Node) -> Node:
+            if not node:
+                return node
+            if node in visited:
+                return visited[node]
+
+            new_node = Node(node.val)
+            visited[node] = new_node
+            new_node.neighbors = [cloneGraph_helper(i) for i in node.neighbors]
+            return new_node
+
+        return cloneGraph_helper(node)
+
 
 # ----------------------------------------------------
 s = Solution()
-a = "abbab"
-print(s.minCut(a))
+node1 = Node(1)
+node2 = Node(2)
+node3 = Node(3)
+node4 = Node(4)
+
+# node1.neighbors = [node2, node4]
+# node2.neighbors = [node1, node3]
+# node3.neighbors = [node2, node4]
+# node4.neighbors = [node1, node3]
+a = s.cloneGraph(node1)
+print()
