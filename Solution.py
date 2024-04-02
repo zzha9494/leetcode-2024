@@ -2289,17 +2289,68 @@ class Solution:
 
         return cloneGraph_helper(node)
 
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        """Q134"""
+        n, i = len(gas), 0
+
+        while i < n:
+            total_gas, total_cost = 0, 0
+            count = 0
+            while count < n:
+                j = (i + count) % n
+                total_gas += gas[j]
+                total_cost += cost[j]
+                if total_gas < total_cost:
+                    break
+                count += 1
+
+            if count == n:
+                return i
+            else:
+                i += count + 1
+        return -1
+
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        """Q134 alternative
+        [i, j]
+        一: 已知i最远可以到j, 
+        则i与j间任一点均不能到达j+1
+        证明：
+        假设i与j之间一点x, x可以到达j+1
+        因为i可以到j, 则i可以到x
+        又因为x可以到j+1, 则i可以到j+1, 矛盾
+
+        有解环路被一点O分为AO, OB两段
+        二: 已知A无法到达O, O可以到达B, 
+        则O是起始点
+        证明：
+        A-O-X-B
+        假设OB之间一点X, O不是起始点, 而X是起始点
+        则X可以走完全程
+        又因为O可以到达B, 则O可以到X, 则O也可以走完全程
+        所以O是起始点, 矛盾
+        """
+        if sum(gas) < sum(cost):
+            return -1
+
+        n = len(gas)
+        start, tank, flag = 0, 0, False
+        while start < n:
+            if flag:
+                return start
+            flag = True
+            for i in range(start, n):
+                tank += gas[i] - cost[i]
+                if tank < 0:
+                    start = i + 1
+                    tank = 0
+                    flag = False
+                    break
+
 
 # ----------------------------------------------------
 s = Solution()
-node1 = Node(1)
-node2 = Node(2)
-node3 = Node(3)
-node4 = Node(4)
-
-# node1.neighbors = [node2, node4]
-# node2.neighbors = [node1, node3]
-# node3.neighbors = [node2, node4]
-# node4.neighbors = [node1, node3]
-a = s.cloneGraph(node1)
-print()
+gas = [1, 2, 3, 4, 5]
+cost = [3, 4, 5, 1, 2]
+a = s.canCompleteCircuit(gas, cost)
+print(a)
