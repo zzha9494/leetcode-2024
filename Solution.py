@@ -2347,6 +2347,23 @@ class Solution:
                     flag = False
                     break
 
+    def candy(self, ratings: List[int]) -> int:
+        """Q135"""
+        n = len(ratings)
+        left = [1] * n
+        for i in range(1, n):
+            if ratings[i] > ratings[i-1]:
+                left[i] = left[i-1] + 1
+
+        ans = 0
+        for i in range(n-1, -1, -1):
+            if i < n-1 and ratings[i] > ratings[i+1]:
+                right += 1
+            else:
+                right = 1
+            ans += max(left[i], right)
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
