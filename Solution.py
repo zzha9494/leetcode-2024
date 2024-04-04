@@ -2403,6 +2403,25 @@ class Solution:
                     break
         return dp[-1]
 
+    def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
+        """Q140"""
+        word_set = set(wordDict)
+        ans, stack = [], []
+        n = len(s)
+
+        def wordBreak_helper(i: int):
+            # i, j is index
+            if i == n:
+                ans.append(" ".join(stack))
+            for j in range(i, n):
+                if s[i: j+1] in word_set:
+                    stack.append(s[i: j+1])
+                    wordBreak_helper(j+1)
+                    stack.pop()
+
+        wordBreak_helper(0)
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
