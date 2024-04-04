@@ -19,12 +19,13 @@ class TreeNode:
 
 
 class Node:
-    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None, neighbors: list['Node'] = None):
+    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None, neighbors: list['Node'] = None, random: 'Node' = None):
         self.val = val
         self.left = left
         self.right = right
         self.next = next
         self.neighbors = neighbors if neighbors is not None else []
+        self.random = random
 
 
 class Solution:
@@ -2367,6 +2368,24 @@ class Solution:
     def singleNumber(self, nums: List[int]) -> int:
         """Q136"""
         return reduce(lambda x, y: x ^ y, nums)
+
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        """Q138"""
+        visited = dict()
+
+        def copyRandomList_helper(node: 'Optional[Node]'):
+            if not node:
+                return None
+            if node in visited:
+                return visited[node]
+
+            new_node = Node(node.val)
+            visited[node] = new_node
+            new_node.next = copyRandomList_helper(node.next)
+            new_node.random = copyRandomList_helper(node.random)
+            return new_node
+
+        return copyRandomList_helper(head)
 
 
 # ----------------------------------------------------
