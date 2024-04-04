@@ -1,7 +1,7 @@
-import collections
-import itertools
-import math
-from functools import lru_cache
+from collections import defaultdict, Counter, deque
+from itertools import product, combinations, permutations
+from math import comb
+from functools import lru_cache, reduce
 from typing import List, Optional
 
 
@@ -377,7 +377,7 @@ class Solution:
                '8': 'tuv',
                '9': 'wxyz'}
         groups = [dic[digit] for digit in digits]
-        return ["".join(combination) for combination in itertools.product(*groups)]
+        return ["".join(combination) for combination in product(*groups)]
 
     def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
         """Q18"""
@@ -922,7 +922,7 @@ class Solution:
 
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         """Q49"""
-        mp = collections.defaultdict(list)
+        mp = defaultdict(list)
 
         for s in strs:
             key = "".join(sorted(s))
@@ -1165,7 +1165,7 @@ class Solution:
 
     def uniquePaths(self, m: int, n: int) -> int:
         """Q62 alternative"""
-        return math.comb(m + n - 2, n-1)  # choose n+1 from m-1 + n-1
+        return comb(m + n - 2, n-1)  # choose n+1 from m-1 + n-1
 
     def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
         """Q63"""
@@ -1321,7 +1321,7 @@ class Solution:
 
     def minWindow(self, s: str, t: str) -> str:
         """Q76"""
-        need = collections.Counter(t)
+        need = Counter(t)
         ans = [0, float('inf')]
         counter = len(t)
         left = 0
@@ -1352,7 +1352,7 @@ class Solution:
 
     def combine(self, n: int, k: int) -> List[List[int]]:
         """Q77"""
-        return list(itertools.combinations(range(1, n+1), k))
+        return list(combinations(range(1, n+1), k))
 
     def combine(self, n: int, k: int) -> List[List[int]]:
         """Q77 alternative"""
@@ -1398,7 +1398,7 @@ class Solution:
             visited[i][j] = False
 
         # if occurrence of left char is greater than right char in board, flip
-        board_counter = collections.Counter([c for row in board for c in row])
+        board_counter = Counter([c for row in board for c in row])
         for i in range(len(word)//2):
             l, r = board_counter[word[i]], board_counter[word[-i]]
             if l > r:
@@ -2363,6 +2363,10 @@ class Solution:
                 right = 1
             ans += max(left[i], right)
         return ans
+
+    def singleNumber(self, nums: List[int]) -> int:
+        """Q136"""
+        return reduce(lambda x, y: x ^ y, nums)
 
 
 # ----------------------------------------------------
