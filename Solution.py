@@ -2433,6 +2433,18 @@ class Solution:
                 return True
         return False
 
+    def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        """Q142"""
+        visited = set()
+        dummy = ListNode(0, head)
+        cursor = dummy
+        while cursor.next:
+            cursor = cursor.next
+            if cursor in visited:
+                return cursor
+            visited.add(cursor)
+        return None
+
 
 # ----------------------------------------------------
 s = Solution()
