@@ -2445,9 +2445,47 @@ class Solution:
             visited.add(cursor)
         return None
 
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        """Q143"""
+        if not head:
+            return
+
+        slow, fast = head, head
+        while fast.next and fast.next.next:
+            slow = slow.next
+            fast = fast.next.next
+        mid = slow
+
+        # 翻转mid后面的节点
+        pre = None
+        cur = mid.next
+        while cur:
+            nxt = cur.next
+            cur.next = pre
+            pre = cur
+            cur = nxt
+        # now pre is the head of reversed list
+
+        mid.next = None  # 断开
+        while head and pre:
+            new_head = head.next
+            new_pre = pre.next
+            head.next = pre
+            pre.next = new_head
+            head = new_head
+            pre = new_pre
+
 
 # ----------------------------------------------------
 s = Solution()
+node1 = ListNode(1)
+node2 = ListNode(2)
+node3 = ListNode(3)
+node4 = ListNode(4)
 
-a = s.wordBreak("leetcode", ["leet", "code"])
+node1.next = node2
+node2.next = node3
+node3.next = node4
+
+a = s.reorderList(node1)
 print(a)
