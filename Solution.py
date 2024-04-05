@@ -2475,6 +2475,22 @@ class Solution:
             head = new_head
             pre = new_pre
 
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        """Q144"""
+        return [root.val, *self.preorderTraversal(root.left), *self.preorderTraversal(root.right)] if root else []
+
+    def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        """Q145"""
+        def postorderTraversal_helper(node):
+            if not node:
+                return
+            postorderTraversal_helper(node.left)
+            postorderTraversal_helper(node.right)
+            ans.append(node.val)
+        ans = []
+        postorderTraversal_helper(root)
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
