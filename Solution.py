@@ -2576,17 +2576,54 @@ class Solution:
 
         return dummy.next
 
+    def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        """Q148"""
+        # base case
+        if not head or not head.next:
+            return head
+
+        # divide
+        dummy = ListNode(0, head)
+        slow = fast = dummy
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        # recur
+        l1 = dummy.next
+        l2 = slow.next
+        slow.next = None
+        l1 = self.sortList(l1)
+        l2 = self.sortList(l2)
+
+        # conquer
+        dummy = ListNode()
+        cur = dummy
+        while l1 and l2:
+            if l1.val < l2.val:
+                cur.next = l1
+                l1 = l1.next
+            else:
+                cur.next = l2
+                l2 = l2.next
+            cur = cur.next
+        if l1:
+            cur.next = l1
+        else:
+            cur.next = l2
+        return dummy.next
+
 
 # ----------------------------------------------------
 s = Solution()
-node1 = ListNode(1)
+node1 = ListNode(4)
 node2 = ListNode(2)
-node3 = ListNode(3)
-node4 = ListNode(4)
+node3 = ListNode(1)
+node4 = ListNode(3)
 
 node1.next = node2
 node2.next = node3
 node3.next = node4
 
-a = s.reorderList(node1)
+a = s.sortList(node1)
 print(a)
