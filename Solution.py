@@ -2627,6 +2627,10 @@ class Solution:
                 stack.append(trunc(res))
         return stack[-1]
 
+    def reverseWords(self, s: str) -> str:
+        """Q151"""
+        return " ".join(reversed(s.split()))
+
 
 # ----------------------------------------------------
 s = Solution()
