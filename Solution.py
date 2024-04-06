@@ -1,6 +1,6 @@
 from collections import defaultdict, Counter, deque
 from itertools import product, combinations, permutations
-from math import comb
+from math import comb, trunc
 from functools import lru_cache, reduce
 from typing import List, Optional
 
@@ -2613,17 +2613,23 @@ class Solution:
             cur.next = l2
         return dummy.next
 
+    def evalRPN(self, tokens: List[str]) -> int:
+        """Q150"""
+        stack = list()
+        ops = set(['+', '-', '*', '/'])
+        for i in tokens:
+            if i not in ops:
+                stack.append(int(i))
+            else:
+                op2 = stack.pop()
+                op1 = stack.pop()
+                res = eval(f"{op1} {i} {op2}")
+                stack.append(trunc(res))
+        return stack[-1]
+
 
 # ----------------------------------------------------
 s = Solution()
-node1 = ListNode(4)
-node2 = ListNode(2)
-node3 = ListNode(1)
-node4 = ListNode(3)
-
-node1.next = node2
-node2.next = node3
-node3.next = node4
-
-a = s.sortList(node1)
+t = ["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"]
+a = s.evalRPN(t)
 print(a)
