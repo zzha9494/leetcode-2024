@@ -37,6 +37,8 @@ class DLinkedNode:
 
 
 class LRUCache:
+    """Q146"""
+
     def __init__(self, capacity: int):
         self.cache = dict()
         self.capacity = capacity
@@ -2550,6 +2552,29 @@ class Solution:
         ans = []
         postorderTraversal_helper(root)
         return ans
+
+    def insertionSortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        """Q147"""
+        dummy = ListNode(0, head)
+        lastSorted = head
+        cur = head.next
+
+        while cur:
+            if lastSorted.val < cur.val:
+                lastSorted = lastSorted.next
+
+            else:
+                pre = dummy
+                while pre.next.val < cur.val:
+                    pre = pre.next
+
+                lastSorted.next = cur.next
+                # use cur as a pointer
+                cur.next = pre.next
+                pre.next = cur
+            cur = lastSorted.next
+
+        return dummy.next
 
 
 # ----------------------------------------------------
