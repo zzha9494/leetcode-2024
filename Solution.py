@@ -28,6 +28,66 @@ class Node:
         self.random = random
 
 
+class DLinkedNode:
+    def __init__(self, key=0, value=0):
+        self.key = key
+        self.value = value
+        self.nxt = None
+        self.pre = None
+
+
+class LRUCache:
+    def __init__(self, capacity: int):
+        self.cache = dict()
+        self.capacity = capacity
+        self.size = 0
+        self.head = DLinkedNode()
+        self.tail = DLinkedNode()
+        self.head.nxt = self.tail
+        self.tail.pre = self.head
+
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+        node = self.cache[key]
+        self.moveToHead(node)
+        return node.value
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            node = self.cache[key]
+            node.value = value
+            self.moveToHead(node)
+        else:
+            node = DLinkedNode(key, value)
+            self.cache[key] = node
+            self.addToHead(node)
+            self.size += 1
+            if self.size > self.capacity:
+                removed = self.removeTail()
+                self.cache.pop(removed.key)
+                self.size -= 1
+
+    def removeNode(self, node):
+        node.pre.nxt = node.nxt
+        node.nxt.pre = node.pre
+
+    def addToHead(self, node):
+        node.nxt = self.head.nxt
+        node.pre = self.head
+        node.nxt.pre = node
+        self.head.nxt = node
+
+    def moveToHead(self, node):
+        self.removeNode(node)
+        self.addToHead(node)
+
+    def removeTail(self):
+        node = self.tail.pre
+        self.removeNode(node)
+        return node
+
+
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         """Q1"""
