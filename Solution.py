@@ -2631,9 +2631,18 @@ class Solution:
         """Q151"""
         return " ".join(reversed(s.split()))
 
+    def maxProduct(self, nums: List[int]) -> int:
+        """Q152"""
+        ans = dp_max = dp_min = nums[0]
+        for num in nums[1:]:
+            dp_max, dp_min = max(dp_max * num, dp_min * num,
+                                 num), min(dp_max * num, dp_min * num, num)
+            ans = max(ans, dp_max)
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
-t = ["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"]
-a = s.evalRPN(t)
+t = [-4, -3, -2]
+a = s.maxProduct(t)
 print(a)
