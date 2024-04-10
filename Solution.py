@@ -2651,9 +2651,24 @@ class Solution:
                 l = m
         return nums[r]
 
+    def findMin(self, nums: List[int]) -> int:
+        """Q154"""
+        l, r = -1, len(nums) - 1
+        while l + 1 < r:
+            m = (l+r) // 2
+            if nums[m] < nums[r]:
+                r = m
+            elif nums[m] > nums[r]:
+                l = m
+            # 如果右端点元素就是最小值，那么 nums[m]也是最小值，说明最小值仍然在二分区间中；
+            # 如果右端点元素不是最小值，这样做相当于排除了一个错误答案。
+            else:
+                r -= 1
+        return nums[r]
+
 
 # ----------------------------------------------------
 s = Solution()
-t = [1]
+t = [3, 1, 3]
 a = s.findMin(t)
 print(a)
