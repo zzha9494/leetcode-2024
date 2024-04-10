@@ -2640,9 +2640,20 @@ class Solution:
             ans = max(ans, dp_max)
         return ans
 
+    def findMin(self, nums: List[int]) -> int:
+        """Q153"""
+        l, r = -1, len(nums)
+        while l+1 != r:
+            m = (l+r) // 2
+            if nums[m] <= nums[-1]:
+                r = m
+            else:
+                l = m
+        return nums[r]
+
 
 # ----------------------------------------------------
 s = Solution()
-t = [-4, -3, -2]
-a = s.maxProduct(t)
+t = [1]
+a = s.findMin(t)
 print(a)
