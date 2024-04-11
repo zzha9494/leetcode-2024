@@ -2698,9 +2698,20 @@ class Solution:
             pb = pb.next if pb else headA
         return pa
 
+    def findPeakElement(self, nums: List[int]) -> int:
+        """Q162"""
+        l, r = -1, len(nums) - 1
+        while l+1 != r:
+            m = (l+r)//2
+            if nums[m] > nums[m+1]:
+                r = m
+            else:
+                l = m
+        return r
+
 
 # ----------------------------------------------------
 s = Solution()
-t = [3, 1, 3]
-a = s.findMin(t)
+t = [1]
+a = s.findPeakElement(t)
 print(a)
