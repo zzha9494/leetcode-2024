@@ -2690,6 +2690,14 @@ class Solution:
                 r -= 1
         return nums[r]
 
+    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
+        """Q160"""
+        pa, pb = headA, headB
+        while pa != pb:
+            pa = pa.next if pa else headB
+            pb = pb.next if pb else headA
+        return pa
+
 
 # ----------------------------------------------------
 s = Solution()
