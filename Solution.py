@@ -2709,9 +2709,14 @@ class Solution:
                 l = m
         return r
 
+    def maximumGap(self, nums: List[int]) -> int:
+        """Q164"""
+        nums.sort()
+        return max(x-y for x, y in zip(nums[1:], nums)) if len(nums) > 1 else 0
+
 
 # ----------------------------------------------------
 s = Solution()
-t = [1]
-a = s.findPeakElement(t)
+t = [1, 2, 3, 6, 5]
+a = s.maximumGap(t)
 print(a)
