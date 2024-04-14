@@ -2723,9 +2723,36 @@ class Solution:
                 return 1 if x > y else -1
         return 0
 
+    def fractionToDecimal(self, numerator: int, denominator: int) -> str:
+        "Q166"
+        if not numerator % denominator:
+            return str(numerator // denominator)
+
+        ans = []
+        if (numerator > 0) != (denominator > 0):
+            ans.append("-")
+        numerator = abs(numerator)
+        denominator = abs(denominator)
+
+        ans.append(str(numerator // denominator))
+        ans.append(".")
+
+        remainder = numerator % denominator
+        indexMap = {}
+        while remainder and remainder not in indexMap:
+            indexMap[remainder] = len(ans)
+            remainder *= 10
+            ans.append(str(remainder // denominator))
+            remainder %= denominator
+
+        if remainder:
+            ans.insert(indexMap[remainder], "(")
+            ans.append(")")
+        return "".join(ans)
+
 
 # ----------------------------------------------------
 s = Solution()
 t = [1, 2, 3, 6, 5]
-a = s.maximumGap(t)
+a = s.fractionToDecimal(10, 3)
 print(a)
