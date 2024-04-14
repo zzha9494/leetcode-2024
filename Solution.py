@@ -1,5 +1,5 @@
 from collections import defaultdict, Counter, deque
-from itertools import product, combinations, permutations
+from itertools import product, combinations, permutations, zip_longest
 from math import comb, trunc
 from functools import lru_cache, reduce
 from typing import List, Optional
@@ -2713,6 +2713,15 @@ class Solution:
         """Q164"""
         nums.sort()
         return max(x-y for x, y in zip(nums[1:], nums)) if len(nums) > 1 else 0
+
+    def compareVersion(self, version1: str, version2: str) -> int:
+        """Q165"""
+        for x, y in zip_longest(version1.split("."), version2.split("."), fillvalue=0):
+
+            x, y = int(x), int(y)
+            if x != y:
+                return 1 if x > y else -1
+        return 0
 
 
 # ----------------------------------------------------
