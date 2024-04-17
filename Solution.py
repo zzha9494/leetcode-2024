@@ -2762,9 +2762,18 @@ class Solution:
             else:
                 return [left + 1, right + 1]
 
+    def convertToTitle(self, columnNumber: int) -> str:
+        """Q168"""
+        ans = []
+        while columnNumber:
+            columnNumber -= 1
+            ans.append(chr(ord("A") + columnNumber % 26))
+            columnNumber //= 26
+        return "".join(ans[::-1])
+
 
 # ----------------------------------------------------
 s = Solution()
-t = [1, 2, 3, 6, 5]
-a = s.fractionToDecimal(10, 3)
+t = 27
+a = s.convertToTitle(t)
 print(a)
