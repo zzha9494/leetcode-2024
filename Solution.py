@@ -2771,9 +2771,18 @@ class Solution:
             columnNumber //= 26
         return "".join(ans[::-1])
 
+    def majorityElement(self, nums: List[int]) -> int:
+        """Q169"""
+        candidate, count = None, 0
+        for num in nums:
+            if not count:
+                candidate = num
+            count += (1 if candidate == num else -1)
+        return candidate
+
 
 # ----------------------------------------------------
 s = Solution()
-t = 27
-a = s.convertToTitle(t)
+t = [2, 2, 1, 1, 1, 2, 2]
+a = s.majorityElement(t)
 print(a)
