@@ -2750,6 +2750,18 @@ class Solution:
             ans.append(")")
         return "".join(ans)
 
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        """Q167"""
+        left, right = 0, len(numbers) - 1
+        while left != right:
+            temp = - target + numbers[left] + numbers[right]
+            if temp > 0:
+                right -= 1
+            elif temp < 0:
+                left += 1
+            else:
+                return [left + 1, right + 1]
+
 
 # ----------------------------------------------------
 s = Solution()
