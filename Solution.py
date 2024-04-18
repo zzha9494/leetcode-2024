@@ -2788,9 +2788,17 @@ class Solution:
             ans += ord(i) - ord("A") + 1
         return ans
 
+    def trailingZeroes(self, n: int) -> int:
+        """Q172"""
+        ans = 0
+        while n:
+            n //= 5
+            ans += n
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
-t = "AA"
-a = s.titleToNumber(t)
+t = 1000
+a = s.trailingZeroes(t)
 print(a)
