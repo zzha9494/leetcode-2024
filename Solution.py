@@ -114,6 +114,25 @@ class MinStack:
         return self.minStack[-1]
 
 
+class BSTIterator:
+    """Q173"""
+
+    def __init__(self, root: Optional[TreeNode]):
+        self.stack = []
+        self.cur = root
+
+    def next(self) -> int:
+        while self.cur:
+            self.stack.append(self.cur)
+            self.cur = self.cur.left
+        node = self.stack.pop()
+        self.cur = node.right
+        return node.val
+
+    def hasNext(self) -> bool:
+        return bool(self.stack or self.cur)
+
+
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         """Q1"""
