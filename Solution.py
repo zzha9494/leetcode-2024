@@ -2780,9 +2780,17 @@ class Solution:
             count += (1 if candidate == num else -1)
         return candidate
 
+    def titleToNumber(self, columnTitle: str) -> int:
+        """Q171"""
+        ans = 0
+        for i in columnTitle:
+            ans *= 26
+            ans += ord(i) - ord("A") + 1
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
-t = [2, 2, 1, 1, 1, 2, 2]
-a = s.majorityElement(t)
+t = "AA"
+a = s.titleToNumber(t)
 print(a)
