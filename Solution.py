@@ -2815,9 +2815,33 @@ class Solution:
             ans += n
         return ans
 
+    def calculateMinimumHP(self, dungeon: List[List[int]]) -> int:
+        """Q174"""
+        # 反向DP
+        # 状态定义：dp[i][j]表示从[i,j]到终点需要的最小血量，dp[0][0]就是最小初始血量
+        # 状态转移：1. 如果dungeon[i][j] == 0，那么，dp[i][j] = min(dp[i+1][j], dp[i][j+1])
+        #          2. 如果dungeon[i][j] < 0，那么，dp[i][j] = min(dp[i+1][j], dp[i][j+1]) - dungeon[i][j]
+        #          3. 如果dungeon[i][j] > 0，那么，dp[i][j] = max(1, min(dp[i+1][j], dp[i][j+1]) - dungeon[i][j])
+        # 所以，三种情况可以统一成一种dp[i][j] = max(1, min(dp[i+1][j], dp[i][j+1]) - dungeon[i][j])
+        # 处理边界：dp[m-1][n-1] = max(1, 1-dungeon[m-1][n-1])，右边和下边，相临的元素只有一个，特殊处理一下。
+
+        m, n = len(dungeon), len(dungeon[0])
+        dp = [[0] * n for _ in range(m)]
+
+        dp[-1][-1] = 1 if dungeon[-1][-1] >= 0 else 1 - dungeon[-1][-1]
+        for i in range(m-2, -1, -1):
+            dp[i][-1] = max(1, dp[i+1][n-1] - dungeon[i][-1])
+        for j in range(n-2, -1, -1):
+            dp[-1][j] = max(1, dp[-1][j+1] - dungeon[-1][j])
+
+        for i in range(m-2, -1, -1):
+            for j in range(n-2, - 1, - 1):
+                dp[i][j] = max(1, min(dp[i+1][j], dp[i][j+1]) - dungeon[i][j])
+        return dp[0][0]
+
 
 # ----------------------------------------------------
 s = Solution()
-t = 1000
-a = s.trailingZeroes(t)
+t = [[-2, -3, 3], [-5, -10, 1], [10, 30, -5]]
+a = s.calculateMinimumHP(t)
 print(a)
