@@ -1,7 +1,7 @@
 from collections import defaultdict, Counter, deque
 from itertools import product, combinations, permutations, zip_longest
 from math import comb, trunc
-from functools import lru_cache, reduce
+from functools import lru_cache, reduce, cmp_to_key
 from typing import List, Optional
 
 
@@ -2839,9 +2839,15 @@ class Solution:
                 dp[i][j] = max(1, min(dp[i+1][j], dp[i][j+1]) - dungeon[i][j])
         return dp[0][0]
 
+    def largestNumber(self, nums: List[int]) -> str:
+        """Q179"""
+        nums = sorted(map(str, nums), key=cmp_to_key(
+            lambda x, y: int(y+x) - int(x+y)))
+        return "0" if nums[0] == "0" else "".join(nums)
+
 
 # ----------------------------------------------------
 s = Solution()
-t = [[-2, -3, 3], [-5, -10, 1], [10, 30, -5]]
-a = s.calculateMinimumHP(t)
+t = [0, 0]
+a = s.largestNumber(t)
 print(a)
