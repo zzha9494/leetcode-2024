@@ -2845,6 +2845,20 @@ class Solution:
             lambda x, y: int(y+x) - int(x+y)))
         return "0" if nums[0] == "0" else "".join(nums)
 
+    def findRepeatedDnaSequences(self, s: str) -> List[str]:
+        """Q187"""
+        n, ans = len(s), []
+        if n <= 10:
+            return ans
+
+        cnt = defaultdict(int)
+        for i in range(n - 9):
+            sub = s[i: i+10]
+            cnt[sub] += 1
+            if cnt[sub] == 2:
+                ans.append(sub)
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
