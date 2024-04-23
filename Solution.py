@@ -2898,9 +2898,25 @@ class Solution:
             cnt += 1
         return cnt
 
+    def rob(self, nums: List[int]) -> int:
+        """Q198"""
+        n = len(nums)
+        dp = [0] * (n+2)
+        for i, x in enumerate(nums):
+            dp[i+2] = max(dp[i+1], dp[i] + x)
+        return dp[-1]
+
+    def rob(self, nums: List[int]) -> int:
+        """Q198 alternative"""
+        f0, f1 = 0, 0
+        for x in nums:
+            new_f = max(f1, f0 + x)
+            f0, f1 = f1, new_f
+        return f1
+
 
 # ----------------------------------------------------
 s = Solution()
-t = [1, 2]
-a = s.rotate(t, 3)
+t = [1, 2, 3, 1]
+a = s.rob(t)
 print(a)
