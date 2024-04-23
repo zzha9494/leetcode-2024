@@ -2859,9 +2859,32 @@ class Solution:
                 ans.append(sub)
         return ans
 
+    def rotate(self, nums: List[int], k: int) -> None:
+        """Q189"""
+
+        # nums = "----->-->"; k =3
+        # result = "-->----->";
+
+        # reverse "----->-->" we can get "<--<-----"
+        # reverse "<--" we can get "--><-----"
+        # reverse "<-----" we can get "-->----->"
+        k %= len(nums)
+        temp = nums[::-1]
+        first = temp[:k]
+        second = temp[k:]
+        first.reverse()
+        second.reverse()
+        nums[:] = first + second
+
+    def rotate(self, nums: List[int], k: int) -> None:
+        """Q189 alternative"""
+        n = len(nums)
+        k = k % n
+        nums[:k], nums[k:] = nums[-k:], nums[:n-k]
+
 
 # ----------------------------------------------------
 s = Solution()
-t = [0, 0]
-a = s.largestNumber(t)
+t = [1, 2]
+a = s.rotate(t, 3)
 print(a)
