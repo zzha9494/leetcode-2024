@@ -2882,6 +2882,14 @@ class Solution:
         k = k % n
         nums[:k], nums[k:] = nums[-k:], nums[:n-k]
 
+    def reverseBits(self, n: int) -> int:
+        """Q190"""
+        res = 0
+        for i in range(32):
+            res |= (n & 1) << (31 - i)
+            n >>= 1
+        return res
+
 
 # ----------------------------------------------------
 s = Solution()
