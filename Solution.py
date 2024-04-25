@@ -2914,6 +2914,20 @@ class Solution:
             f0, f1 = f1, new_f
         return f1
 
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        """Q199"""
+        def dfs(node: TreeNode, depth: int) -> None:
+            if not node:
+                return
+            if len(ans) == depth:
+                ans.append(node.val)
+            dfs(node.right, depth + 1)
+            dfs(node.left, depth + 1)
+
+        ans = []
+        dfs(root, 0)
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
