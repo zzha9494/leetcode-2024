@@ -2928,9 +2928,37 @@ class Solution:
         dfs(root, 0)
         return ans
 
+    def numIslands(self, grid: List[List[str]]) -> int:
+        """Q200"""
+        def dfs(i, j):
+            # if grid[i][j] == "0":
+            #     return
+            grid[i][j] = "0"
+            for r, c in [(i+1, j), (i-1, j), (i, j+1), (i, j-1)]:
+                if 0 <= r < m and 0 <= c < n and grid[r][c] == "1":
+                    dfs(r, c)
+            # if i > 0:
+            #     dfs(i-1, j)
+            # if i < m-1:
+            #     dfs(i+1, j)
+            # if j < n-1:
+            #     dfs(i, j+1)
+            # if j > 0:
+            #     dfs(i, j-1)
+
+        m, n = len(grid), len(grid[0])
+        ans = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == "1":
+                    ans += 1
+                    dfs(i, j)
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
-t = [1, 2, 3, 1]
-a = s.rob(t)
+t = [["1", "1", "1", "1", "0"], ["1", "1", "0", "1", "0"],
+     ["1", "1", "0", "0", "0"], ["0", "0", "0", "0", "0"]]
+a = s.numIslands(t)
 print(a)
