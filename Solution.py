@@ -2955,6 +2955,13 @@ class Solution:
                     dfs(i, j)
         return ans
 
+    def rangeBitwiseAnd(self, left: int, right: int) -> int:
+        """Q201"""
+        # Brian Kernighan's Algorithm
+        while right > left:
+            right &= right - 1
+        return right
+
 
 # ----------------------------------------------------
 s = Solution()
