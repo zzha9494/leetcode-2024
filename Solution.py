@@ -2984,6 +2984,17 @@ class Solution:
         head.next = self.removeElements(head.next, val)
         return head if head.val != val else head.next
 
+    def countPrimes(self, n: int) -> int:
+        """Q204"""
+        isPrime = [1] * n
+        ans = 0
+        for i in range(2, n):
+            if isPrime[i]:
+                ans += 1
+                for j in range(i * i, n, i):
+                    isPrime[j] = 0
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
