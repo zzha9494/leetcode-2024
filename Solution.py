@@ -2977,6 +2977,13 @@ class Solution:
             n = next(n)
         return n == 1
 
+    def removeElements(self, head: Optional[ListNode], val: int) -> Optional[ListNode]:
+        """Q203"""
+        if not head:
+            return head
+        head.next = self.removeElements(head.next, val)
+        return head if head.val != val else head.next
+
 
 # ----------------------------------------------------
 s = Solution()
