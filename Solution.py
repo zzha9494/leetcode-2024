@@ -3005,6 +3005,17 @@ class Solution:
             t2s[t[i]] = s[i]
         return True
 
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        """Q206"""
+        pre = None
+        cur = head
+        while cur:
+            nxt = cur.next
+            cur.next = pre
+            pre = cur
+            cur = nxt
+        return pre
+
 
 # ----------------------------------------------------
 s = Solution()
