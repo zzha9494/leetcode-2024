@@ -3016,6 +3016,33 @@ class Solution:
             cur = nxt
         return pre
 
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        """Q207"""
+        visited = [0] * numCourses  # 0: not visited 1: visiting 2: visited
+        edges = defaultdict(list)
+        valid = True
+
+        for i in prerequisites:
+            edges[i[1]].append(i[0])  # 0 -> 1 (i[1] -> i[0])
+
+        def dfs(u: int):
+            nonlocal valid
+            visited[u] = 1
+            for v in edges[u]:
+                if visited[v] == 0:
+                    dfs(v)
+                    if not valid:
+                        return
+                elif visited[v] == 1:
+                    valid = False
+                    return
+            visited[u] = 2
+
+        for i in range(numCourses):
+            if valid and not visited[i]:
+                dfs(i)
+        return valid
+
 
 # ----------------------------------------------------
 s = Solution()
