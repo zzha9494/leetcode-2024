@@ -133,6 +133,39 @@ class BSTIterator:
         return bool(self.stack or self.cur)
 
 
+class Trie:
+    """Q208"""
+
+    def __init__(self):
+        self.children = [None] * 26
+        self.isEnd = False
+
+    def insert(self, word: str) -> None:
+        cur = self
+        for ch in word:
+            i = ord(ch) - ord('a')
+            if not cur.children[i]:
+                cur.children[i] = Trie()
+            cur = cur.children[i]
+        cur.isEnd = True
+
+    def search(self, word: str) -> bool:
+        node = self.searchPrefix(word)
+        return node is not None and node.isEnd
+
+    def startsWith(self, prefix: str) -> bool:
+        return self.searchPrefix(prefix) is not None
+
+    def searchPrefix(self, prefix: str) -> 'Trie':
+        cur = self
+        for ch in prefix:
+            i = ord(ch) - ord('a')
+            if not cur.children[i]:
+                return None
+            cur = cur.children[i]
+        return cur
+
+
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         """Q1"""
