@@ -166,6 +166,38 @@ class Trie:
         return cur
 
 
+class WordDictionary:
+    """Q211"""
+
+    def __init__(self):
+        self.children = [None] * 26
+        self.isEnd = False
+
+    def addWord(self, word: str) -> None:
+        cur = self
+        for ch in word:
+            i = ord(ch) - ord('a')
+            if cur.children[i] is None:
+                cur.children[i] = WordDictionary()
+            cur = cur.children[i]
+        cur.isEnd = True
+
+    def search(self, word: str) -> bool:
+        def dfs(cur: 'WordDictionary', i: int) -> bool:
+            if i == len(word):
+                return cur.isEnd
+            if word[i] != '.':
+                child = cur.children[ord(word[i]) - ord('a')]
+                return child is not None and dfs(child, i+1)
+
+            for child in cur.children:
+                if child is not None and dfs(child, i+1):
+                    return True
+            return False
+
+        return dfs(self, 0)
+
+
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         """Q1"""
