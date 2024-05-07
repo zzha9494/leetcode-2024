@@ -3090,9 +3090,37 @@ class Solution:
             end += 1
         return ans if ans != n+1 else 0
 
+    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        """Q210"""
+        visited = [0] * numCourses
+        valid = True
+        edges = defaultdict(list)
+        res = []
+        for i in prerequisites:
+            edges[i[1]].append(i[0])
+
+        def dfs(u: int) -> None:
+            nonlocal valid
+            visited[u] = 1
+            for v in edges[u]:
+                if visited[v] == 1:
+                    valid = False
+                    return
+                if visited[v] == 0:
+                    dfs(v)
+                    if not valid:
+                        return
+            visited[u] = 2
+            res.append(u)
+
+        for i in range(numCourses):
+            if valid and visited[i] == 0:
+                dfs(i)
+        return [] if not valid else res[::-1]
+
 
 # ----------------------------------------------------
 s = Solution()
-t = [1, 2, 3, 4, 5]
-a = s.minSubArrayLen(11, t)
+t = [[1, 0], [2, 0], [3, 1], [3, 2]]
+a = s.findOrder(4, t)
 print(a)
