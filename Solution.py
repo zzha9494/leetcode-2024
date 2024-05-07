@@ -3150,6 +3150,16 @@ class Solution:
                 dfs(i)
         return [] if not valid else res[::-1]
 
+    def rob(self, nums: List[int]) -> int:
+        """Q213"""
+        def dp(nums):
+            f0 = f1 = 0
+            for num in nums:
+                f0, f1 = f1, max(f0 + num, f1)
+            return f1
+
+        return max(nums[0] + dp(nums[2:-1]), dp(nums[1:]))
+
 
 # ----------------------------------------------------
 s = Solution()
