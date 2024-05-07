@@ -3076,10 +3076,23 @@ class Solution:
                 dfs(i)
         return valid
 
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+        """Q209"""
+        start, end, total = 0, 0, 0
+        n = len(nums)
+        ans = n+1
+        while end < n:
+            total += nums[end]
+            while total >= target:
+                ans = min(ans, end - start + 1)
+                total -= nums[start]
+                start += 1
+            end += 1
+        return ans if ans != n+1 else 0
+
 
 # ----------------------------------------------------
 s = Solution()
-t = [["1", "1", "1", "1", "0"], ["1", "1", "0", "1", "0"],
-     ["1", "1", "0", "0", "0"], ["0", "0", "0", "0", "0"]]
-a = s.numIslands(t)
+t = [1, 2, 3, 4, 5]
+a = s.minSubArrayLen(11, t)
 print(a)
