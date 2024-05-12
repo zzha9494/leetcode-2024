@@ -1,7 +1,8 @@
 from collections import defaultdict, Counter, deque
+from functools import lru_cache, reduce, cmp_to_key
 from itertools import product, combinations, permutations, zip_longest
 from math import comb, trunc
-from functools import lru_cache, reduce, cmp_to_key
+from random import choice
 from typing import List, Optional
 
 
@@ -3159,6 +3160,25 @@ class Solution:
             return f1
 
         return max(nums[0] + dp(nums[2:-1]), dp(nums[1:]))
+
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        """Q215"""
+        pivot = choice(nums)
+        small, equal, big = [], [], []
+
+        for num in nums:
+            if num < pivot:
+                small.append(num)
+            elif num > pivot:
+                big.append(num)
+            else:
+                equal.append(num)
+
+        if k <= len(big):
+            return self.findKthLargest(big, k)
+        elif k > len(equal) + len(big):
+            return self.findKthLargest(small, k - len(equal) - len(big))
+        return pivot
 
 
 # ----------------------------------------------------
