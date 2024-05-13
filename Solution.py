@@ -3180,6 +3180,31 @@ class Solution:
             return self.findKthLargest(small, k - len(equal) - len(big))
         return pivot
 
+    def combinationSum3(self, k: int, n: int) -> List[List[int]]:
+        """Q216"""
+        return list(filter(lambda x: sum(x) == n, combinations(range(1, 10), k)))
+
+    def combinationSum3(self, k: int, n: int) -> List[List[int]]:
+        """Q216 alternative"""
+        ans = []
+        path = []
+
+        def dfs(i: int, t: int) -> None:
+            d = k - len(path)  # 还需要d个数
+            # 等差数列
+            # 当d=0时，第二项等于0，此时t<0和t>0都已经包括，只剩t=0
+            if t < 0 or t > (i * 2 - d + 1) * d / 2:
+                return
+            if len(path) == k:
+                ans.append(path.copy())
+                return
+            for j in range(i, d-1, -1):
+                path.append(j)
+                dfs(j-1, t-j)
+                path.pop()
+        dfs(9, n)
+        return ans
+
 
 # ----------------------------------------------------
 s = Solution()
