@@ -3205,6 +3205,10 @@ class Solution:
         dfs(9, n)
         return ans
 
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        """Q217"""
+        return len(nums) != len(set(nums))
+
 
 # ----------------------------------------------------
 s = Solution()
